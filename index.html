@@ -393,6 +393,13 @@
       margin-bottom: 6px;
     }
 
+    .bookingPreview {
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      padding: 14px;
+      background: var(--pink2);
+    }
+
     .nav {
       position: fixed;
       left: 50%;
@@ -467,13 +474,6 @@
       display: block;
     }
 
-    .divider {
-      height: 2px;
-      background: var(--ink);
-      opacity: .12;
-      margin: 12px 0;
-    }
-
     .empty {
       padding: 18px;
       border: 2px dashed var(--ink);
@@ -514,7 +514,7 @@
   <div class="toast" id="toast">Saved</div>
 
 <script>
-const STORAGE_KEY = "blondedByCamNeighborSalonV3";
+const STORAGE_KEY = "blondedByCamNeighborSalonV4";
 
 const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dayDates = {
@@ -1092,7 +1092,7 @@ function appointmentCard(a) {
       </div>
       <div class="grid3" style="margin-top:8px">
         <button onclick="openClient(${c.id})">Client</button>
-        <button onclick="openFormula(${c.id})">Formula</button>
+        <button onclick="openBookingLink(${c.id})">Booking link</button>
         <button onclick="openFlag(${a.id})">Flag</button>
       </div>
     </div>
@@ -1147,7 +1147,7 @@ function renderPeople() {
         <div>
           <div class="sub">People</div>
           <h2>Client memory</h2>
-          <p class="muted">Search clients, formulas, notes, text activity, cycles, and fast actions.</p>
+          <p class="muted">Search clients, formulas, notes, text activity, booking links, cycles, and fast actions.</p>
         </div>
         <button class="primary" onclick="openAddClient()">Add</button>
       </div>
@@ -1186,7 +1186,7 @@ function renderTools() {
     <div class="card pinkCard">
       <div class="sub">Tools</div>
       <h2>Quick actions</h2>
-      <p class="muted">Text from iPhone, Apple Calendar launcher, templates, combo finder, win back radar, services, and settings.</p>
+      <p class="muted">Text from iPhone, Apple Calendar launcher, booking link preview, templates, combo finder, win back radar, services, and settings.</p>
     </div>
 
     <div class="card creamCard">
@@ -1196,6 +1196,12 @@ function renderTools() {
         <button onclick="openTemplate('confirm')">Text from iPhone</button>
         <button onclick="openAppleCalendar()">Open Apple Calendar</button>
       </div>
+    </div>
+
+    <div class="card greenCard">
+      <h3>Client booking link preview</h3>
+      <p class="muted">This shows the future flow. Cam texts a link. Client taps it. Client picks a suggested time. The production version books Apple Calendar and logs it to the client profile.</p>
+      <button class="primary" onclick="openBookingLink(1)">Preview booking link</button>
     </div>
 
     <div class="card">
@@ -1372,6 +1378,7 @@ function openTextModal(client, msg, type) {
         <button onclick="openMessagesForClient(${client.id})">Open Messages</button>
       </div>
       <button class="pink" onclick="markTextSent(${client.id})">Mark text sent</button>
+      <button onclick="openBookingLink(${client.id})">Send booking link instead</button>
       <div class="card flat creamCard">
         <b>Important production note</b>
         <p class="muted">A web app cannot read Cam’s iMessages. Production can log drafts, open the native composer, and capture manual status. Full iMessage thread sync is not promised here.</p>
@@ -1423,6 +1430,105 @@ function openAppleCalendar() {
   }, 250);
 }
 
+function openBookingLink(clientId) {
+  const c = getClient(clientId);
+  const fakeLink = "https://blondedbycam.com/book/" + c.id;
+  const msg = `Hi ${c.name.split(" ")[0]}! Here’s a quick booking link for your next ${c.usualService.toLowerCase()}: ${fakeLink}`;
+
+  activeClient = c;
+
+  openModal("Booking link for " + c.name, `
+    <div class="stack">
+      <div class="card flat greenCard">
+        <b>Future client booking flow</b>
+        <p class="muted">This is a prototype preview. Production needs a database, real availability logic, Apple Calendar integration, and a client facing booking page.</p>
+      </div>
+
+      <label>Text to send
+        <textarea id="textDraft">${msg}</textarea>
+      </label>
+
+      <div class="grid2">
+        <button class="primary" onclick="copyBookingLink(${c.id})">Copy booking text</button>
+        <button onclick="openMessagesForClient(${c.id})">Open Messages</button>
+      </div>
+
+      <button class="pink" onclick="previewClientBooking(${c.id})">Preview client view</button>
+      <button onclick="mockClientBook(${c.id}, 'Tue July 15 at 1:30 PM')">Demo confirm booking</button>
+
+      <div class="card flat creamCard">
+        <b>What production should do</b>
+        <p class="muted">Client taps link. Client picks a time. System confirms the appointment. System writes it to Cam’s Apple Calendar. System logs the booking inside this client profile.</p>
+      </div>
+    </div>
+  `);
+}
+
+function copyBookingLink(clientId) {
+  const text = document.getElementById("textDraft").value;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      addActivity(clientId, "Booking link drafted", text);
+      showToast("Booking text copied");
+    });
+  } else {
+    document.getElementById("textDraft").select();
+    document.execCommand("copy");
+    addActivity(clientId, "Booking link drafted", text);
+    showToast("Booking text copied");
+  }
+}
+
+function previewClientBooking(clientId) {
+  const c = getClient(clientId);
+
+  openModal("Client booking preview", `
+    <div class="stack">
+      <div class="bookingPreview">
+        <div class="sub">Blonded by Cam</div>
+        <h2>Pick your next appointment</h2>
+        <p class="muted">${c.name}, choose one of Cam’s suggested times for ${c.usualService}.</p>
+      </div>
+
+      <button onclick="mockClientBook(${c.id}, 'Mon July 14 at 10:00 AM')">Mon July 14 at 10:00 AM</button>
+      <button onclick="mockClientBook(${c.id}, 'Tue July 15 at 1:30 PM')">Tue July 15 at 1:30 PM</button>
+      <button onclick="mockClientBook(${c.id}, 'Thu July 17 at 3:00 PM')">Thu July 17 at 3:00 PM</button>
+
+      <div class="card flat creamCard">
+        <b>Demo behavior</b>
+        <p class="muted">When a time is tapped, this prototype adds a fake appointment, logs the action, and marks the future Apple Calendar step.</p>
+      </div>
+    </div>
+  `);
+}
+
+function mockClientBook(clientId, slot) {
+  const c = getClient(clientId);
+  const time = slot.split(" at ")[1] || "10:00 AM";
+
+  state.appointments.push({
+    id: nextId(state.appointments),
+    day: "Tue",
+    clientId: c.id,
+    time,
+    end: "Later",
+    service: c.usualService,
+    price: 175,
+    status: "scheduled",
+    flag: "Booked by link",
+    flagType: "event",
+    privateNote: "Prototype booking link flow. Production should write to Apple Calendar."
+  });
+
+  addActivity(c.id, "Client booking confirmed", `Client selected ${slot}. Prototype added appointment. Production should write to Apple Calendar.`);
+  saveState();
+  showToast("Booking confirmed");
+  closeModal();
+  selectedDay = "Tue";
+  setScreen("schedule");
+}
+
 function openRebook(apptId) {
   activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
   activeClient = getClient(activeAppointment.clientId);
@@ -1442,7 +1548,8 @@ function openRebook(apptId) {
       ${slots.map(slot => `
         <button onclick="bookSlot('${slot}')">${slot}</button>
       `).join("")}
-      <button class="pink" onclick="openTextForClient(${activeClient.id}, 'rebook')">Draft rebook text instead</button>
+      <button class="pink" onclick="openTextForClient(${activeClient.id}, 'rebook')">Draft rebook text</button>
+      <button onclick="openBookingLink(${activeClient.id})">Send booking link</button>
     </div>
   `);
 }
@@ -1590,9 +1697,11 @@ function openClient(clientId) {
       </div>
       <div class="grid2">
         <button onclick="openTextForClient(${c.id})">Text</button>
-        <button onclick="openFormula(${c.id})">Edit formula</button>
+        <button onclick="openBookingLink(${c.id})">Booking link</button>
         <button onclick="openRebookForClient(${c.id})">Rebook</button>
         <button onclick="openClientMoney(${c.id})">Money</button>
+        <button onclick="openFormula(${c.id})">Edit formula</button>
+        <button onclick="openAppleCalendar()">Apple Calendar</button>
       </div>
     </div>
   `);
@@ -1810,6 +1919,7 @@ function openCombo(name, minutes) {
         <button class="primary" onclick="copyDraft(${c.id}, 'Combo finder text')">Copy and log</button>
         <button onclick="openMessagesForClient(${c.id})">Open Messages</button>
       </div>
+      <button onclick="openBookingLink(${c.id})">Send booking link instead</button>
     </div>
   `);
 }
