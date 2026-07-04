@@ -1,257 +1,492 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cam Salon Command Center</title>
+  <title>Blonded by Cam Neighbor Salon</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --ink: #111111;
+      --paper: #fffafc;
+      --card: #ffffff;
+      --pink: #ffdbe8;
+      --pink2: #fff1f6;
+      --hot: #ff6f9f;
+      --cream: #fff7df;
+      --lav: #eee6ff;
+      --coral: #ffd4c7;
+      --green: #dff7e8;
+      --stone: #f2f2f2;
+      --muted: #655b60;
+      --line: #111111;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff7fa;
-      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
     }
-    .app {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 18px 14px 90px;
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
     }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 {
-      font-size: 32px;
-      line-height: 1;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-    }
-    .sub {
-      color: #77515d;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .card {
-      background: #fff;
-      border: 2px solid #111;
-      border-radius: 22px;
-      padding: 16px;
-      margin: 12px 0;
-      box-shadow: 0 5px 0 #111;
-    }
-    .soft {
-      background: #ffe6ef;
-    }
-    .flat {
-      box-shadow: none;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .stack {
-      display: grid;
-      gap: 10px;
-    }
-    button, a.sms {
-      border: 2px solid #111;
-      background: #fff;
-      color: #111;
+
+    button,
+    .smsLink {
+      border: 2px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
       border-radius: 999px;
       padding: 11px 13px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 14px;
+      min-height: 44px;
       text-decoration: none;
       text-align: center;
       cursor: pointer;
-      min-height: 44px;
-    }
-    button.primary {
-      background: #111;
-      color: #fff;
-    }
-    button.pink {
-      background: #ffd9e6;
-    }
-    .grid2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .grid3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-    }
-    .appt {
-      border: 2px solid #111;
-      border-radius: 20px;
-      background: #fff;
-      padding: 14px;
-      margin: 10px 0;
-    }
-    .appt.done {
-      opacity: .55;
-      background: #f5f5f5;
-    }
-    .time {
-      font-size: 13px;
-      font-weight: 900;
-      color: #8b5367;
-      margin-bottom: 4px;
-    }
-    .name {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-    .service {
-      font-size: 14px;
-      color: #555;
-      margin: 4px 0 8px;
-    }
-    .flag {
-      display: inline-block;
-      padding: 7px 10px;
-      border: 1.5px solid #111;
-      border-radius: 999px;
-      background: #ffe6ef;
-      font-size: 12px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-    .flag.alert { background: #ffd5ca; }
-    .flag.event { background: #fff0bd; }
-    .flag.formula { background: #eee6ff; }
-    .muted {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-    .nav {
-      position: fixed;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      width: min(94%, 500px);
-      background: #fff;
-      border: 2px solid #111;
-      border-radius: 999px;
-      padding: 6px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.14);
-    }
-    .nav button {
-      border: 0;
-      box-shadow: none;
-      min-height: 42px;
-      padding: 9px 4px;
-      font-size: 12px;
-    }
-    .nav button.active {
-      background: #111;
-      color: #fff;
-    }
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      display: none;
-      align-items: end;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      padding: 12px;
-      z-index: 5;
+      gap: 6px;
     }
-    .modal.show { display: flex; }
-    .sheet {
-      width: min(100%, 520px);
-      max-height: 88vh;
-      overflow: auto;
-      background: #fff;
-      border: 2px solid #111;
-      border-radius: 24px;
-      padding: 16px;
+
+    button.primary {
+      background: var(--ink);
+      color: white;
     }
-    textarea, input, select {
+
+    button.pink {
+      background: var(--pink);
+    }
+
+    button.soft {
+      background: var(--pink2);
+    }
+
+    button.tiny {
+      min-height: 34px;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    input,
+    select,
+    textarea {
       width: 100%;
-      border: 2px solid #111;
+      border: 2px solid var(--line);
       border-radius: 16px;
       padding: 12px;
-      font: inherit;
-      background: #fff;
+      background: white;
+      color: var(--ink);
     }
-    textarea { min-height: 120px; }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
     label {
       display: grid;
       gap: 6px;
       font-size: 13px;
       font-weight: 900;
     }
-    .money {
-      font-size: 42px;
-      font-weight: 900;
-      letter-spacing: -2px;
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
     }
-    .client {
-      width: 100%;
-      text-align: left;
-      border-radius: 18px;
+
+    h1 {
+      font-size: 30px;
+      letter-spacing: -1.2px;
+      line-height: 1.02;
+      margin: 0 0 14px;
+    }
+
+    h2 {
+      font-size: 24px;
+      letter-spacing: -.6px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      margin-bottom: 7px;
+    }
+
+    .app {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 18px 14px 94px;
+    }
+
+    .topbar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
+      margin-bottom: 8px;
     }
-    .avatar {
+
+    .logoDot {
       width: 42px;
       height: 42px;
-      border: 2px solid #111;
+      border: 2px solid var(--ink);
       border-radius: 50%;
-      background: #ffd9e6;
+      background: var(--pink);
       display: grid;
       place-items: center;
       font-weight: 900;
       flex: none;
     }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      margin: 12px 0;
+      box-shadow: 0 5px 0 var(--ink);
+    }
+
+    .flat {
+      box-shadow: none;
+    }
+
+    .pinkCard {
+      background: var(--pink2);
+    }
+
+    .creamCard {
+      background: var(--cream);
+    }
+
+    .lavCard {
+      background: var(--lav);
+    }
+
+    .greenCard {
+      background: var(--green);
+    }
+
+    .coralCard {
+      background: var(--coral);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .rowTop {
+      align-items: flex-start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+      margin-bottom: 0;
+    }
+
+    .sub {
+      color: #85566a;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+      margin-bottom: 5px;
+    }
+
+    .appt {
+      border: 2px solid var(--line);
+      border-radius: 21px;
+      background: white;
+      padding: 14px;
+      margin: 10px 0;
+    }
+
+    .appt.completed {
+      opacity: .66;
+      background: #f6f6f6;
+    }
+
+    .time {
+      font-size: 13px;
+      color: #885366;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.8px;
+    }
+
+    .service {
+      color: #555;
+      font-size: 14px;
+      margin: 4px 0 9px;
+    }
+
+    .flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border: 1.7px solid var(--line);
+      border-radius: 999px;
+      background: var(--pink);
+      font-size: 12px;
+      font-weight: 900;
+      margin: 0 6px 8px 0;
+      max-width: 100%;
+    }
+
+    .flag.alert {
+      background: var(--coral);
+    }
+
+    .flag.event {
+      background: var(--cream);
+    }
+
+    .flag.formula {
+      background: var(--lav);
+    }
+
+    .flag.time {
+      background: var(--green);
+    }
+
+    .pillRow {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0 8px;
+    }
+
+    .pillRow button {
+      white-space: nowrap;
+      flex: none;
+    }
+
+    .moneyBig {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin: 4px 0;
+    }
+
+    .clientButton {
+      width: 100%;
+      border-radius: 18px;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 10px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--pink);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: none;
+    }
+
+    .calendarGrid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .dayCell {
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      padding: 8px 5px;
+      min-height: 82px;
+      background: white;
+      text-align: left;
+      display: block;
+    }
+
+    .dayCell.active {
+      background: var(--pink);
+    }
+
+    .dayName {
+      font-size: 11px;
+      font-weight: 900;
+      color: #85566a;
+    }
+
+    .dayDate {
+      font-size: 20px;
+      font-weight: 900;
+      margin: 1px 0 4px;
+    }
+
+    .miniAppt {
+      display: block;
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 3px 4px;
+      font-size: 10px;
+      font-weight: 900;
+      margin-top: 4px;
+      background: var(--pink2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav {
+      position: fixed;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      width: min(95%, 520px);
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      box-shadow: 0 8px 26px rgba(0,0,0,.15);
+      z-index: 4;
+    }
+
+    .nav button {
+      border: 0;
+      min-height: 40px;
+      padding: 8px 2px;
+      font-size: 11px;
+      box-shadow: none;
+    }
+
+    .nav button.active {
+      background: var(--ink);
+      color: white;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+      z-index: 10;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .sheet {
+      width: min(100%, 540px);
+      max-height: 90vh;
+      overflow: auto;
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 25px;
+      padding: 16px;
+      box-shadow: 0 12px 0 rgba(0,0,0,.2);
+    }
+
     .toast {
       position: fixed;
       left: 50%;
       bottom: 78px;
       transform: translateX(-50%);
-      background: #111;
-      color: #fff;
+      background: var(--ink);
+      color: white;
       border-radius: 999px;
       padding: 11px 16px;
       font-weight: 900;
       display: none;
-      z-index: 9;
+      z-index: 99;
     }
-    .toast.show { display: block; }
+
+    .toast.show {
+      display: block;
+    }
+
+    .divider {
+      height: 2px;
+      background: var(--ink);
+      opacity: .12;
+      margin: 12px 0;
+    }
+
+    .empty {
+      padding: 18px;
+      border: 2px dashed var(--ink);
+      border-radius: 20px;
+      background: white;
+    }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="sub">Monday prototype</div>
-    <h1>Cam’s Salon Command Center</h1>
-    <p class="muted">Simple first. Function before beauty. Built around schedule, rebook, text, closeout, flags, and client memory.</p>
+    <div class="topbar">
+      <div>
+        <h1>Blonded by Cam Neighbor Salon</h1>
+      </div>
+      <div class="logoDot">BC</div>
+    </div>
     <div id="screen"></div>
   </div>
 
   <div class="nav">
-    <button onclick="setScreen('schedule')" id="nav-schedule">Schedule</button>
-    <button onclick="setScreen('people')" id="nav-people">People</button>
-    <button onclick="setScreen('tools')" id="nav-tools">Tools</button>
-    <button onclick="setScreen('money')" id="nav-money">Money</button>
+    <button id="nav-schedule" onclick="setScreen('schedule')">Schedule</button>
+    <button id="nav-calendar" onclick="setScreen('calendar')">Calendar</button>
+    <button id="nav-people" onclick="setScreen('people')">People</button>
+    <button id="nav-tools" onclick="setScreen('tools')">Tools</button>
+    <button id="nav-money" onclick="setScreen('money')">Money</button>
   </div>
 
   <div class="modal" id="modal">
     <div class="sheet">
-      <div class="row">
-        <h2 id="modalTitle">Modal</h2>
-        <button onclick="closeModal()">Close</button>
+      <div class="row rowTop">
+        <h2 id="modalTitle">Details</h2>
+        <button class="tiny" onclick="closeModal()">Close</button>
       </div>
       <div id="modalBody"></div>
     </div>
@@ -260,63 +495,123 @@
   <div class="toast" id="toast">Saved</div>
 
 <script>
-const clients = [
+const STORAGE_KEY = "blondedByCamNeighborSalonV2";
+
+const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const dayDates = {
+  Mon: "7",
+  Tue: "8",
+  Wed: "9",
+  Thu: "10",
+  Fri: "11",
+  Sat: "12",
+  Sun: "13"
+};
+
+const defaultServices = [
+  { id: 1, name: "Base Color", duration: 90, price: 145, category: "Color" },
+  { id: 2, name: "Blowdry", duration: 35, price: 65, category: "Style" },
+  { id: 3, name: "Gloss", duration: 60, price: 120, category: "Color" },
+  { id: 4, name: "Haircut", duration: 50, price: 95, category: "Cut" },
+  { id: 5, name: "Balayage", duration: 180, price: 285, category: "Color" },
+  { id: 6, name: "Extensions", duration: 210, price: 450, category: "Extensions" },
+  { id: 7, name: "K18 Treatment", duration: 20, price: 45, category: "Treatment" }
+];
+
+const defaultClients = [
   {
     id: 1,
     name: "Steffani Pugh",
     phone: "8185550101",
     tier: "VIP",
-    service: "Base Color + Blowdry",
+    usualService: "Base Color + Blowdry",
     cycle: 28,
     daysSince: 42,
     spend: 4070,
+    payment: "Venmo",
     formula: "7NN + 6N. Low heat. Likes soft natural finish.",
-    note: "Sensitive scalp. Prefers quiet appointment."
+    formulaHistory: [
+      "Last visit: 7NN + 6N. Low heat.",
+      "Prior visit: 7N root touch and gloss refresh."
+    ],
+    note: "Sensitive scalp. Prefers quiet appointment. Coffee with Splenda."
   },
   {
     id: 2,
     name: "Dani Mare",
     phone: "8185550102",
     tier: "Core",
-    service: "Gloss + Cut",
+    usualService: "Gloss + Cut",
     cycle: 35,
     daysSince: 21,
     spend: 2850,
+    payment: "Square",
     formula: "Gloss refresh. K18 when ends feel dry.",
-    note: "Likes quick appointment. Usually pays Venmo."
+    formulaHistory: [
+      "Gloss refresh with K18.",
+      "Face frame trim. Keep length."
+    ],
+    note: "Likes quick appointment. Usually pays with Square."
   },
   {
     id: 3,
     name: "Amanda K.",
     phone: "8185550103",
     tier: "VIP",
-    service: "Balayage + Cut",
+    usualService: "Balayage + Cut",
     cycle: 56,
     daysSince: 63,
     spend: 5220,
+    payment: "Zelle",
     formula: "Keep brightness around face. No orange warmth.",
-    note: "Engagement photos coming up."
+    formulaHistory: [
+      "Bright face frame. Cool beige gloss.",
+      "No orange. Keep dimension."
+    ],
+    note: "Engagement photos coming up. Give extra polish today."
   },
   {
     id: 4,
     name: "Maya R.",
     phone: "8185550104",
     tier: "Core",
-    service: "Haircut",
+    usualService: "Haircut",
     cycle: 49,
     daysSince: 14,
     spend: 1320,
+    payment: "Cash",
     formula: "Long layers. Keep length.",
+    formulaHistory: [
+      "Long layers. Soft face frame."
+    ],
     note: "Likes soft face frame."
+  },
+  {
+    id: 5,
+    name: "Kelly S.",
+    phone: "8185550105",
+    tier: "VIP",
+    usualService: "Extensions",
+    cycle: 42,
+    daysSince: 48,
+    spend: 6100,
+    payment: "Venmo",
+    formula: "First extension install. Extra time needed.",
+    formulaHistory: [
+      "Consult complete. Need extra install time."
+    ],
+    note: "First extension install. Leave buffer."
   }
 ];
 
-let appointments = JSON.parse(localStorage.getItem("camAppointments") || "null") || [
+const defaultAppointments = [
   {
     id: 101,
+    day: "Mon",
     clientId: 1,
     time: "9:30 AM",
     end: "11:45 AM",
+    service: "Base Color + Blowdry",
     price: 225,
     status: "scheduled",
     flag: "Sensitive scalp",
@@ -325,9 +620,11 @@ let appointments = JSON.parse(localStorage.getItem("camAppointments") || "null")
   },
   {
     id: 102,
+    day: "Mon",
     clientId: 2,
     time: "12:15 PM",
     end: "1:45 PM",
+    service: "Gloss + Cut",
     price: 180,
     status: "scheduled",
     flag: "Use Splenda",
@@ -336,42 +633,277 @@ let appointments = JSON.parse(localStorage.getItem("camAppointments") || "null")
   },
   {
     id: 103,
+    day: "Mon",
     clientId: 3,
     time: "2:30 PM",
     end: "5:30 PM",
+    service: "Balayage + Cut",
     price: 325,
     status: "scheduled",
     flag: "Engagement photos",
     flagType: "event",
     privateNote: "Extra polish today. Mention photos."
+  },
+  {
+    id: 104,
+    day: "Tue",
+    clientId: 4,
+    time: "10:00 AM",
+    end: "11:00 AM",
+    service: "Haircut",
+    price: 95,
+    status: "scheduled",
+    flag: "Keep length",
+    flagType: "formula",
+    privateNote: "Long layers only."
+  },
+  {
+    id: 105,
+    day: "Wed",
+    clientId: 5,
+    time: "9:00 AM",
+    end: "12:45 PM",
+    service: "Extensions",
+    price: 450,
+    status: "scheduled",
+    flag: "Extra time",
+    flagType: "time",
+    privateNote: "First extension install. Do not stack too tight."
+  },
+  {
+    id: 106,
+    day: "Thu",
+    clientId: 1,
+    time: "1:00 PM",
+    end: "2:45 PM",
+    service: "Gloss + Blowdry",
+    price: 165,
+    status: "scheduled",
+    flag: "Formula check",
+    flagType: "formula",
+    privateNote: "Check toner timing."
+  },
+  {
+    id: 107,
+    day: "Fri",
+    clientId: 3,
+    time: "11:30 AM",
+    end: "1:30 PM",
+    service: "Color Refresh",
+    price: 210,
+    status: "scheduled",
+    flag: "Photo ready",
+    flagType: "event",
+    privateNote: "Make sure front looks photo polished."
   }
 ];
 
+const defaultClosed = [
+  {
+    id: 301,
+    period: "today",
+    dateLabel: "Today",
+    clientId: 4,
+    service: "Haircut",
+    subtotal: 95,
+    tip: 20,
+    payment: "Cash"
+  },
+  {
+    id: 302,
+    period: "thisWeek",
+    dateLabel: "Tue",
+    clientId: 2,
+    service: "Gloss + Cut",
+    subtotal: 180,
+    tip: 35,
+    payment: "Square"
+  },
+  {
+    id: 303,
+    period: "thisWeek",
+    dateLabel: "Wed",
+    clientId: 1,
+    service: "Base Color",
+    subtotal: 145,
+    tip: 30,
+    payment: "Venmo"
+  },
+  {
+    id: 304,
+    period: "lastWeek",
+    dateLabel: "Last Mon",
+    clientId: 3,
+    service: "Balayage + Cut",
+    subtotal: 325,
+    tip: 60,
+    payment: "Zelle"
+  },
+  {
+    id: 305,
+    period: "lastWeek",
+    dateLabel: "Last Tue",
+    clientId: 5,
+    service: "Extensions",
+    subtotal: 450,
+    tip: 80,
+    payment: "Venmo"
+  },
+  {
+    id: 306,
+    period: "lastWeek",
+    dateLabel: "Last Wed",
+    clientId: 2,
+    service: "Gloss",
+    subtotal: 120,
+    tip: 25,
+    payment: "Square"
+  },
+  {
+    id: 307,
+    period: "thisMonth",
+    dateLabel: "Jul 1",
+    clientId: 1,
+    service: "Base + Blowdry",
+    subtotal: 225,
+    tip: 40,
+    payment: "Venmo"
+  },
+  {
+    id: 308,
+    period: "thisMonth",
+    dateLabel: "Jul 2",
+    clientId: 4,
+    service: "Haircut",
+    subtotal: 95,
+    tip: 15,
+    payment: "Cash"
+  },
+  {
+    id: 309,
+    period: "lastMonth",
+    dateLabel: "Jun 5",
+    clientId: 3,
+    service: "Balayage",
+    subtotal: 285,
+    tip: 55,
+    payment: "Zelle"
+  },
+  {
+    id: 310,
+    period: "lastMonth",
+    dateLabel: "Jun 7",
+    clientId: 1,
+    service: "Base Color",
+    subtotal: 145,
+    tip: 30,
+    payment: "Venmo"
+  },
+  {
+    id: 311,
+    period: "lastMonth",
+    dateLabel: "Jun 11",
+    clientId: 5,
+    service: "Extensions Move Up",
+    subtotal: 350,
+    tip: 70,
+    payment: "Venmo"
+  },
+  {
+    id: 312,
+    period: "lastMonth",
+    dateLabel: "Jun 18",
+    clientId: 2,
+    service: "Cut + Gloss",
+    subtotal: 180,
+    tip: 30,
+    payment: "Square"
+  }
+];
+
+let state = loadState();
 let screen = "schedule";
+let selectedDay = "Mon";
 let activeAppointment = null;
 let activeClient = null;
 
-function save() {
-  localStorage.setItem("camAppointments", JSON.stringify(appointments));
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+
+  if (saved) {
+    return JSON.parse(saved);
+  }
+
+  return {
+    clients: defaultClients,
+    services: defaultServices,
+    appointments: defaultAppointments,
+    closed: defaultClosed,
+    settings: {
+      weeklyGoal: 3250,
+      defaultTip: 15,
+      appleSync: false,
+      messagesMode: "Copy first, then open Messages"
+    }
+  };
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function money(n) {
-  return "$" + Number(n).toLocaleString();
+  return "$" + Number(n || 0).toLocaleString();
 }
 
 function getClient(id) {
-  return clients.find(c => c.id === id);
+  return state.clients.find(c => Number(c.id) === Number(id));
 }
 
 function initials(name) {
-  return name.split(" ").map(x => x[0]).join("").slice(0,2);
+  return name
+    .split(" ")
+    .map(x => x[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function nextId(items) {
+  return Math.max(0, ...items.map(i => Number(i.id) || 0)) + 1;
+}
+
+function totalClosed(items) {
+  return items.reduce((sum, item) => sum + Number(item.subtotal || 0) + Number(item.tip || 0), 0);
+}
+
+function subtotalClosed(items) {
+  return items.reduce((sum, item) => sum + Number(item.subtotal || 0), 0);
+}
+
+function tipsClosed(items) {
+  return items.reduce((sum, item) => sum + Number(item.tip || 0), 0);
+}
+
+function formatFlagType(type) {
+  const map = {
+    alert: "Allergy",
+    event: "Occasion",
+    formula: "Formula",
+    time: "Extra time"
+  };
+
+  return map[type] || "Note";
 }
 
 function showToast(text) {
   const el = document.getElementById("toast");
   el.textContent = text;
   el.classList.add("show");
-  setTimeout(() => el.classList.remove("show"), 1400);
+
+  setTimeout(() => {
+    el.classList.remove("show");
+  }, 1300);
 }
 
 function setScreen(next) {
@@ -380,51 +912,114 @@ function setScreen(next) {
 }
 
 function setNav() {
-  ["schedule","people","tools","money"].forEach(x => {
+  ["schedule", "calendar", "people", "tools", "money"].forEach(x => {
     document.getElementById("nav-" + x).classList.toggle("active", screen === x);
   });
 }
 
 function render() {
   setNav();
-  if (screen === "schedule") renderSchedule();
-  if (screen === "people") renderPeople();
-  if (screen === "tools") renderTools();
-  if (screen === "money") renderMoney();
+
+  if (screen === "schedule") {
+    renderSchedule();
+  }
+
+  if (screen === "calendar") {
+    renderCalendar();
+  }
+
+  if (screen === "people") {
+    renderPeople();
+  }
+
+  if (screen === "tools") {
+    renderTools();
+  }
+
+  if (screen === "money") {
+    renderMoney();
+  }
 }
 
 function renderSchedule() {
-  const total = appointments.reduce((sum, a) => sum + (a.status === "completed" ? 0 : a.price), 0);
+  const appts = state.appointments.filter(a => a.day === selectedDay);
+  const scheduledTotal = appts
+    .filter(a => a.status !== "completed")
+    .reduce((sum, a) => sum + Number(a.price || 0), 0);
+
+  const next = appts.find(a => a.status !== "completed") || appts[0];
+  const nextClient = next ? getClient(next.clientId) : null;
+
   document.getElementById("screen").innerHTML = `
-    <div class="card soft">
-      <div class="row">
+    <div class="card pinkCard">
+      <div class="row rowTop">
         <div>
-          <div class="sub">Today</div>
-          <h2>${appointments.length} appointments</h2>
-          <p class="muted">Projected remaining services: <b>${money(total)}</b></p>
+          <div class="sub">${selectedDay} July ${dayDates[selectedDay]}</div>
+          <h2>${appts.length} appointments</h2>
+          <p class="muted">Projected services today: <b>${money(scheduledTotal)}</b></p>
         </div>
-        <button class="primary" onclick="openApple()">Apple</button>
+        <button class="primary" onclick="setScreen('calendar')">View week</button>
       </div>
     </div>
 
-    ${appointments.map(a => appointmentCard(a)).join("")}
+    ${nextClient ? `
+      <div class="card flat creamCard">
+        <div class="sub">Next client</div>
+        <div class="row rowTop">
+          <div>
+            <h2>${nextClient.name}</h2>
+            <p class="muted">${next.time} · ${next.service}</p>
+            ${next.flag ? `<span class="flag ${next.flagType}">${formatFlagType(next.flagType)} · ${next.flag}</span>` : ""}
+          </div>
+          <div class="avatar">${initials(nextClient.name)}</div>
+        </div>
+        <div class="grid3">
+          <button onclick="openText(${next.id})">Text</button>
+          <button onclick="openRebook(${next.id})">Rebook</button>
+          <button onclick="openCloseout(${next.id})">Closeout</button>
+        </div>
+      </div>
+    ` : ""}
+
+    <div class="pillRow">
+      ${dayOrder.map(d => `
+        <button class="tiny ${d === selectedDay ? "primary" : ""}" onclick="selectedDay='${d}'; renderSchedule();">${d} ${dayDates[d]}</button>
+      `).join("")}
+    </div>
+
+    <div class="row">
+      <h2>Schedule</h2>
+      <button class="pink tiny" onclick="openAddAppointment()">Add appointment</button>
+    </div>
+
+    ${appts.length ? appts.map(a => appointmentCard(a)).join("") : `
+      <div class="empty">
+        <b>No appointments.</b>
+        <p class="muted">Tap Add appointment to create a demo booking.</p>
+      </div>
+    `}
   `;
 }
 
 function appointmentCard(a) {
   const c = getClient(a.clientId);
+
+  if (!c) {
+    return "";
+  }
+
   return `
-    <div class="appt ${a.status === "completed" ? "done" : ""}">
-      <div class="row">
+    <div class="appt ${a.status === "completed" ? "completed" : ""}">
+      <div class="row rowTop">
         <div>
           <div class="time">${a.time} to ${a.end}</div>
           <div class="name">${c.name}</div>
-          <div class="service">${c.service}</div>
-          ${a.flag ? `<div class="flag ${a.flagType}">${a.flag}</div>` : ""}
+          <div class="service">${a.service}</div>
+          ${a.flag ? `<span class="flag ${a.flagType}">${formatFlagType(a.flagType)} · ${a.flag}</span>` : ""}
         </div>
         <div style="text-align:right">
           <b>${money(a.price)}</b>
-          <div class="muted">${a.status}</div>
+          <p class="muted">${a.status}</p>
         </div>
       </div>
       ${a.privateNote ? `<p class="muted">${a.privateNote}</p>` : ""}
@@ -433,12 +1028,228 @@ function appointmentCard(a) {
         <button onclick="openRebook(${a.id})">Rebook</button>
         <button onclick="openCloseout(${a.id})">Closeout</button>
       </div>
-      <div class="grid2" style="margin-top:8px">
-        <button onclick="openClient(${c.id})">Client card</button>
-        <button onclick="openFlag(${a.id})">Flag note</button>
+      <div class="grid3" style="margin-top:8px">
+        <button onclick="openClient(${c.id})">Client</button>
+        <button onclick="openFormula(${c.id})">Formula</button>
+        <button onclick="openFlag(${a.id})">Flag</button>
       </div>
     </div>
   `;
+}
+
+function renderCalendar() {
+  document.getElementById("screen").innerHTML = `
+    <div class="card pinkCard">
+      <div class="row rowTop">
+        <div>
+          <div class="sub">Calendar jump off</div>
+          <h2>Week view</h2>
+          <p class="muted">Tap a day to see that day’s schedule. Real Apple Calendar sync comes later with an iOS wrapper.</p>
+        </div>
+        <button class="primary" onclick="openApplePlan()">Apple</button>
+      </div>
+    </div>
+
+    <div class="calendarGrid">
+      ${dayOrder.map(d => {
+        const appts = state.appointments.filter(a => a.day === d);
+
+        return `
+          <button class="dayCell ${d === selectedDay ? "active" : ""}" onclick="selectedDay='${d}'; setScreen('schedule');">
+            <div class="dayName">${d}</div>
+            <div class="dayDate">${dayDates[d]}</div>
+            ${appts.slice(0, 2).map(a => `
+              <span class="miniAppt">${a.time} ${getClient(a.clientId)?.name.split(" ")[0] || ""}</span>
+            `).join("")}
+            ${appts.length > 2 ? `<span class="miniAppt">+${appts.length - 2} more</span>` : ""}
+          </button>
+        `;
+      }).join("")}
+    </div>
+
+    <div class="card flat creamCard">
+      <h3>Apple Calendar preview</h3>
+      <p class="muted">This prototype shows the salon calendar. The production version can use Apple EventKit so Cam’s real calendar blocks availability and receives salon bookings.</p>
+      <button onclick="openApplePlan()">View Apple sync plan</button>
+    </div>
+  `;
+}
+
+function renderPeople() {
+  document.getElementById("screen").innerHTML = `
+    <div class="card pinkCard">
+      <div class="row rowTop">
+        <div>
+          <div class="sub">People</div>
+          <h2>Client memory</h2>
+          <p class="muted">Search clients, formulas, notes, cycles, and fast text actions.</p>
+        </div>
+        <button class="primary" onclick="openAddClient()">Add</button>
+      </div>
+    </div>
+    <input id="clientSearch" placeholder="Search clients" oninput="renderClientList()" />
+    <div id="clientList" class="stack" style="margin-top:10px"></div>
+  `;
+
+  renderClientList();
+}
+
+function renderClientList() {
+  const q = (document.getElementById("clientSearch")?.value || "").toLowerCase();
+
+  const filtered = state.clients.filter(c => {
+    return [c.name, c.usualService, c.note, c.formula].join(" ").toLowerCase().includes(q);
+  });
+
+  document.getElementById("clientList").innerHTML = filtered.map(c => `
+    <button class="clientButton" onclick="openClient(${c.id})">
+      <span class="avatar">${initials(c.name)}</span>
+      <span style="flex:1">
+        <b>${c.name}</b>
+        <p class="muted">${c.usualService} · ${c.cycle} day cycle</p>
+      </span>
+      <span><b>${money(c.spend)}</b></span>
+    </button>
+  `).join("") || `
+    <div class="empty">No clients match that search.</div>
+  `;
+}
+
+function renderTools() {
+  document.getElementById("screen").innerHTML = `
+    <div class="card pinkCard">
+      <div class="sub">Tools</div>
+      <h2>Quick actions</h2>
+      <p class="muted">Text templates, combo finder, win back radar, services, and Apple sync preview.</p>
+    </div>
+
+    <div class="card">
+      <h3>Text templates</h3>
+      <div class="grid2">
+        <button onclick="openTemplate('confirm')">Confirm appt</button>
+        <button onclick="openTemplate('late')">Running late</button>
+        <button onclick="openTemplate('rebook')">Rebook</button>
+        <button onclick="openTemplate('winback')">Win back</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Combo finder</h3>
+      <p class="muted">Pick a combo. Copy available times into iMessage.</p>
+      <div class="grid2">
+        <button onclick="openCombo('Color + Cut', 195)">Color + Cut</button>
+        <button onclick="openCombo('Gloss + Blowdry', 100)">Gloss + Blowdry</button>
+        <button onclick="openCombo('Balayage + Cut', 230)">Balayage + Cut</button>
+        <button onclick="openCombo('Extensions', 210)">Extensions</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Win back radar</h3>
+      ${state.clients.filter(c => c.daysSince > c.cycle * 1.25).map(c => `
+        <div class="appt">
+          <b>${c.name}</b>
+          <p class="muted">Usually every ${c.cycle} days. Last visit ${c.daysSince} days ago. ${money(c.spend)} lifetime.</p>
+          <div class="grid2">
+            <button onclick="openClient(${c.id})">Client card</button>
+            <button onclick="openTextForClient(${c.id}, 'winback')">Draft text</button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="card flat lavCard">
+      <h3>Services and prices</h3>
+      <p class="muted">Keep this simple for the demo. Production can make this editable by Cam.</p>
+      <button onclick="openServices()">View services</button>
+    </div>
+
+    <div class="card flat creamCard">
+      <h3>Apple Calendar</h3>
+      <p class="muted">Real sync needs native iOS EventKit. For now this shows the intended workflow.</p>
+      <button onclick="openApplePlan()">View Apple plan</button>
+    </div>
+
+    <div class="card flat coralCard">
+      <h3>Demo reset</h3>
+      <p class="muted">Resets local browser demo data only.</p>
+      <button onclick="resetDemo()">Reset demo data</button>
+    </div>
+  `;
+}
+
+function renderMoney() {
+  const todayClosed = state.closed.filter(c => c.period === "today");
+  const thisWeekClosed = state.closed.filter(c => c.period === "today" || c.period === "thisWeek");
+  const lastWeekClosed = state.closed.filter(c => c.period === "lastWeek");
+  const thisMonthClosed = state.closed.filter(c => ["today", "thisWeek", "thisMonth"].includes(c.period));
+  const lastMonthClosed = state.closed.filter(c => c.period === "lastMonth");
+
+  const projectedWeek = state.appointments
+    .filter(a => a.status !== "completed")
+    .reduce((sum, a) => sum + Number(a.price || 0), 0) + totalClosed(thisWeekClosed);
+
+  document.getElementById("screen").innerHTML = `
+    <div class="card pinkCard">
+      <div class="sub">Money</div>
+      <h2>Revenue command center</h2>
+      <div class="moneyBig">${money(projectedWeek)}</div>
+      <p class="muted">Projected this week based on scheduled appointments plus fake closed history.</p>
+    </div>
+
+    <div class="pillRow">
+      <button class="pink" onclick="openMoneyPeriod('Today', ${JSON.stringify(todayClosed.map(x => x.id))})">Today ${money(totalClosed(todayClosed))}</button>
+      <button onclick="openMoneyPeriod('This week', ${JSON.stringify(thisWeekClosed.map(x => x.id))})">This week ${money(totalClosed(thisWeekClosed))}</button>
+      <button onclick="openMoneyPeriod('Last week', ${JSON.stringify(lastWeekClosed.map(x => x.id))})">Last week ${money(totalClosed(lastWeekClosed))}</button>
+      <button onclick="openMoneyPeriod('This month', ${JSON.stringify(thisMonthClosed.map(x => x.id))})">This month ${money(totalClosed(thisMonthClosed))}</button>
+      <button onclick="openMoneyPeriod('Last month', ${JSON.stringify(lastMonthClosed.map(x => x.id))})">Last month ${money(totalClosed(lastMonthClosed))}</button>
+    </div>
+
+    <div class="grid2">
+      <div class="card flat">
+        <div class="sub">Today closed</div>
+        <h2>${money(totalClosed(todayClosed))}</h2>
+        <p class="muted">${todayClosed.length} closeout</p>
+      </div>
+      <div class="card flat">
+        <div class="sub">This week closed</div>
+        <h2>${money(totalClosed(thisWeekClosed))}</h2>
+        <p class="muted">${thisWeekClosed.length} closeouts</p>
+      </div>
+      <div class="card flat">
+        <div class="sub">Last week actual</div>
+        <h2>${money(totalClosed(lastWeekClosed))}</h2>
+        <p class="muted">Client detail available</p>
+      </div>
+      <div class="card flat">
+        <div class="sub">Avg ticket</div>
+        <h2>${money(Math.round(totalClosed(thisWeekClosed) / Math.max(1, thisWeekClosed.length)))}</h2>
+        <p class="muted">This week closed</p>
+      </div>
+    </div>
+
+    <div class="card flat creamCard">
+      <h3>Payment split preview</h3>
+      ${paymentSplit(thisMonthClosed).map(row => `
+        <p class="muted"><b>${row.method}</b>: ${money(row.total)}</p>
+      `).join("")}
+    </div>
+  `;
+}
+
+function paymentSplit(items) {
+  const map = {};
+
+  items.forEach(i => {
+    map[i.payment] = (map[i.payment] || 0) + Number(i.subtotal || 0) + Number(i.tip || 0);
+  });
+
+  return Object.keys(map).map(method => {
+    return {
+      method,
+      total: map[method]
+    };
+  });
 }
 
 function openModal(title, body) {
@@ -452,102 +1263,274 @@ function closeModal() {
 }
 
 function openText(apptId) {
-  activeAppointment = appointments.find(a => a.id === apptId);
+  activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
   activeClient = getClient(activeAppointment.clientId);
-  const msg = `Hi ${activeClient.name.split(" ")[0]}! I have you today at ${activeAppointment.time} for ${activeClient.service}. See you soon 💕`;
-  openModal("Text " + activeClient.name, `
+
+  const msg = `Hi ${activeClient.name.split(" ")[0]}! I have you ${activeAppointment.day} at ${activeAppointment.time} for ${activeAppointment.service}. See you soon 💕`;
+
+  openTextModal(activeClient, msg);
+}
+
+function openTextForClient(clientId, type = "rebook") {
+  const c = getClient(clientId);
+
+  let msg = `Hi ${c.name.split(" ")[0]}! I wanted to get your next ${c.usualService.toLowerCase()} on the books. I have Mon at 10, Tue at 1:30, or Thu at 3.`;
+
+  if (type === "winback") {
+    msg = `Hi ${c.name.split(" ")[0]}! I was looking at your usual timing and you’re right around that refresh window. Want me to send a few openings?`;
+  }
+
+  openTextModal(c, msg);
+}
+
+function openTextModal(client, msg) {
+  openModal("Text " + client.name, `
     <div class="stack">
-      <p class="muted">Uses Cam’s real phone number. App prepares the message. Cam taps send in Messages.</p>
+      <div class="card flat pinkCard">
+        <b>Real iPhone number workflow</b>
+        <p class="muted">Copy the message, then open Messages. Cam reviews and taps send from her own phone number.</p>
+      </div>
       <label>Message draft
         <textarea id="textDraft">${msg}</textarea>
       </label>
-      <button class="primary" onclick="copyDraft()">Copy message</button>
-      <a class="sms" href="sms:${activeClient.phone}">Open Messages</a>
-      <p class="muted">Apple blocks silent auto send. This keeps Cam in control.</p>
+      <div class="grid2">
+        <button class="primary" onclick="copyDraft()">Copy message</button>
+        <a class="smsLink" href="sms:${client.phone}">Open Messages</a>
+      </div>
     </div>
   `);
 }
 
 function copyDraft() {
   const text = document.getElementById("textDraft").value;
-  navigator.clipboard.writeText(text).then(() => showToast("Copied"));
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast("Copied"));
+  } else {
+    document.getElementById("textDraft").select();
+    document.execCommand("copy");
+    showToast("Copied");
+  }
 }
 
 function openRebook(apptId) {
-  activeAppointment = appointments.find(a => a.id === apptId);
+  activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
   activeClient = getClient(activeAppointment.clientId);
+
   const slots = [
-    "Mon July 13 at 10:00 AM",
-    "Tue July 14 at 1:30 PM",
-    "Thu July 16 at 3:00 PM"
+    "Mon July 14 at 10:00 AM",
+    "Tue July 15 at 1:30 PM",
+    "Thu July 17 at 3:00 PM"
   ];
+
   openModal("Rebook " + activeClient.name, `
     <div class="stack">
-      <div class="card flat soft">
-        <b>Usual cycle</b>
-        <p>${activeClient.service} every ${activeClient.cycle} days.</p>
+      <div class="card flat creamCard">
+        <b>Suggested cycle</b>
+        <p class="muted">${activeClient.usualService} every ${activeClient.cycle} days. Last visit ${activeClient.daysSince} days ago.</p>
       </div>
-      ${slots.map(s => `<button onclick="bookSlot('${s}')">${s}</button>`).join("")}
-      <button onclick="openText(${activeAppointment.id})">Draft text instead</button>
+      ${slots.map(slot => `
+        <button onclick="bookSlot('${slot}')">${slot}</button>
+      `).join("")}
+      <button class="pink" onclick="openTextForClient(${activeClient.id}, 'rebook')">Draft rebook text instead</button>
     </div>
   `);
 }
 
 function bookSlot(slot) {
-  showToast("Rebooked: " + slot);
+  const id = nextId(state.appointments);
+
+  state.appointments.push({
+    id,
+    day: "Mon",
+    clientId: activeClient.id,
+    time: slot.split(" at ")[1] || "10:00 AM",
+    end: "Later",
+    service: activeClient.usualService,
+    price: Math.round(activeAppointment.price || 175),
+    status: "scheduled",
+    flag: "Rebooked",
+    flagType: "event",
+    privateNote: "Created from rebook flow."
+  });
+
+  saveState();
+  showToast("Rebooked");
   closeModal();
+  render();
 }
 
 function openCloseout(apptId) {
-  activeAppointment = appointments.find(a => a.id === apptId);
+  activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
   activeClient = getClient(activeAppointment.clientId);
+
   openModal("Close out " + activeClient.name, `
     <div class="stack">
       <label>Service subtotal
-        <input id="subtotal" type="number" value="${activeAppointment.price}" oninput="updateTotal()" />
+        <input id="closeSubtotal" type="number" value="${activeAppointment.price}" oninput="updateCloseoutTotal()" />
       </label>
       <label>Tip
-        <input id="tip" type="number" value="30" oninput="updateTotal()" />
+        <input id="closeTip" type="number" value="30" oninput="updateCloseoutTotal()" />
       </label>
       <label>Payment method
-        <select id="payment">
+        <select id="closePayment">
           <option>Square</option>
           <option>Venmo</option>
           <option>Zelle</option>
           <option>Cash</option>
         </select>
       </label>
-      <div class="card flat soft">
+      <div class="card flat pinkCard">
         <div class="sub">Total</div>
-        <div class="money" id="total">$${activeAppointment.price + 30}</div>
+        <div class="moneyBig" id="closeTotal">${money(Number(activeAppointment.price) + 30)}</div>
       </div>
       <label>Session note
-        <textarea id="sessionNote">Formula worked well. Rebook in ${activeClient.cycle} days.</textarea>
+        <textarea id="closeNote">Formula worked well. Rebook in ${activeClient.cycle} days.</textarea>
       </label>
       <button class="primary" onclick="finishCloseout()">Finish closeout</button>
     </div>
   `);
+
+  document.getElementById("closePayment").value = activeClient.payment || "Square";
 }
 
-function updateTotal() {
-  const subtotal = Number(document.getElementById("subtotal").value || 0);
-  const tip = Number(document.getElementById("tip").value || 0);
-  document.getElementById("total").textContent = money(subtotal + tip);
+function updateCloseoutTotal() {
+  const subtotal = Number(document.getElementById("closeSubtotal").value || 0);
+  const tip = Number(document.getElementById("closeTip").value || 0);
+
+  document.getElementById("closeTotal").textContent = money(subtotal + tip);
 }
 
 function finishCloseout() {
+  const subtotal = Number(document.getElementById("closeSubtotal").value || activeAppointment.price);
+  const tip = Number(document.getElementById("closeTip").value || 0);
+  const payment = document.getElementById("closePayment").value;
+
   activeAppointment.status = "completed";
-  activeAppointment.price = Number(document.getElementById("subtotal").value || activeAppointment.price);
-  save();
+  activeAppointment.price = subtotal;
+
+  state.closed.push({
+    id: nextId(state.closed),
+    period: "today",
+    dateLabel: "Today",
+    clientId: activeClient.id,
+    service: activeAppointment.service,
+    subtotal,
+    tip,
+    payment
+  });
+
+  activeClient.spend += subtotal + tip;
+
+  saveState();
   showToast("Closeout saved");
   closeModal();
   render();
 }
 
+function openClient(clientId) {
+  const c = getClient(clientId);
+
+  const due = c.daysSince > c.cycle
+    ? `Overdue by ${c.daysSince - c.cycle} days`
+    : `Due in ${c.cycle - c.daysSince} days`;
+
+  openModal(c.name, `
+    <div class="stack">
+      <div class="row rowTop">
+        <div class="avatar">${initials(c.name)}</div>
+        <div style="flex:1">
+          <div class="sub">${c.tier}</div>
+          <h2>${c.usualService}</h2>
+          <p class="muted">${due} · Usually every ${c.cycle} days · Pays ${c.payment}</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card flat">
+          <b>${money(c.spend)}</b>
+          <p class="muted">Lifetime spend</p>
+        </div>
+        <div class="card flat">
+          <b>${c.cycle} days</b>
+          <p class="muted">Usual cycle</p>
+        </div>
+      </div>
+      <div class="card flat pinkCard">
+        <b>Formula</b>
+        <p>${c.formula}</p>
+      </div>
+      <div class="card flat">
+        <b>Client note</b>
+        <p>${c.note}</p>
+      </div>
+      <div class="card flat creamCard">
+        <b>Formula history</b>
+        ${c.formulaHistory.map(f => `<p class="muted">${f}</p>`).join("")}
+      </div>
+      <div class="grid2">
+        <button onclick="openTextForClient(${c.id})">Text</button>
+        <button onclick="openFormula(${c.id})">Edit formula</button>
+        <button onclick="openRebookForClient(${c.id})">Rebook</button>
+        <button onclick="openClientMoney(${c.id})">Money</button>
+      </div>
+    </div>
+  `);
+}
+
+function openRebookForClient(clientId) {
+  const c = getClient(clientId);
+  activeClient = c;
+  activeAppointment = { price: 175 };
+
+  const fakeId = state.appointments[0]?.id || 101;
+
+  closeModal();
+
+  setTimeout(() => openRebook(fakeId), 100);
+}
+
+function openFormula(clientId) {
+  const c = getClient(clientId);
+
+  openModal("Formula for " + c.name, `
+    <div class="stack">
+      <label>Current formula note
+        <textarea id="formulaText">${c.formula}</textarea>
+      </label>
+      <label>Add history note
+        <textarea id="formulaHistoryText">${c.formulaHistory[0] || ""}</textarea>
+      </label>
+      <button class="primary" onclick="saveFormula(${c.id})">Save formula</button>
+    </div>
+  `);
+}
+
+function saveFormula(clientId) {
+  const c = getClient(clientId);
+
+  c.formula = document.getElementById("formulaText").value;
+
+  const newHistory = document.getElementById("formulaHistoryText").value;
+
+  if (newHistory) {
+    c.formulaHistory.unshift(newHistory);
+  }
+
+  saveState();
+  showToast("Formula saved");
+  closeModal();
+
+  if (screen === "people") {
+    renderPeople();
+  }
+}
+
 function openFlag(apptId) {
-  activeAppointment = appointments.find(a => a.id === apptId);
-  activeClient = getClient(activeAppointment.clientId);
-  openModal("Flag for " + activeClient.name, `
+  activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
+
+  const c = getClient(activeAppointment.clientId);
+
+  openModal("Flag for " + c.name, `
     <div class="stack">
       <p class="muted">Short flag shows on the schedule. Private note stays inside the appointment.</p>
       <label>Visible flag
@@ -558,15 +1541,17 @@ function openFlag(apptId) {
           <option value="alert">Allergy or sensitivity</option>
           <option value="event">Special occasion</option>
           <option value="formula">Formula reminder</option>
-          <option value="">Basic</option>
+          <option value="time">Extra time</option>
+          <option value="">Basic note</option>
         </select>
       </label>
-      <label>Private note
+      <label>Private appointment note
         <textarea id="privateNote">${activeAppointment.privateNote || ""}</textarea>
       </label>
       <button class="primary" onclick="saveFlag()">Save flag</button>
     </div>
   `);
+
   document.getElementById("flagType").value = activeAppointment.flagType || "";
 }
 
@@ -574,155 +1559,256 @@ function saveFlag() {
   activeAppointment.flag = document.getElementById("flagText").value;
   activeAppointment.flagType = document.getElementById("flagType").value;
   activeAppointment.privateNote = document.getElementById("privateNote").value;
-  save();
+
+  saveState();
   showToast("Flag saved");
   closeModal();
   render();
 }
 
-function openClient(id) {
-  activeClient = getClient(id);
-  openModal(activeClient.name, `
+function openMoneyPeriod(title, ids) {
+  const items = state.closed.filter(i => ids.includes(i.id));
+  const avg = Math.round(totalClosed(items) / Math.max(1, items.length));
+
+  openModal(title + " details", `
     <div class="stack">
-      <div class="row">
-        <div class="avatar">${initials(activeClient.name)}</div>
-        <div>
-          <b>${activeClient.tier}</b>
-          <p class="muted">${activeClient.service}</p>
+      <div class="grid2">
+        <div class="card flat pinkCard">
+          <div class="sub">Total</div>
+          <h2>${money(totalClosed(items))}</h2>
+        </div>
+        <div class="card flat">
+          <div class="sub">Average ticket</div>
+          <h2>${money(avg)}</h2>
+        </div>
+        <div class="card flat">
+          <div class="sub">Services</div>
+          <h2>${money(subtotalClosed(items))}</h2>
+        </div>
+        <div class="card flat">
+          <div class="sub">Tips</div>
+          <h2>${money(tipsClosed(items))}</h2>
         </div>
       </div>
-      <div class="grid2">
-        <div class="card flat"><b>${money(activeClient.spend)}</b><p class="muted">Lifetime spend</p></div>
-        <div class="card flat"><b>${activeClient.cycle} days</b><p class="muted">Usual cycle</p></div>
-      </div>
-      <div class="card flat soft"><b>Formula</b><p>${activeClient.formula}</p></div>
-      <div class="card flat"><b>Preference note</b><p>${activeClient.note}</p></div>
-      <button class="primary" onclick="openTextForClient(${activeClient.id})">Text client</button>
+      ${items.map(item => closedRow(item)).join("") || `
+        <div class="empty">No closed appointments in this period.</div>
+      `}
     </div>
   `);
 }
 
-function openTextForClient(id) {
-  const c = getClient(id);
-  const msg = `Hi ${c.name.split(" ")[0]}! I was looking at your usual timing and wanted to see if you want to get your next ${c.service.toLowerCase()} on the books.`;
-  openModal("Text " + c.name, `
+function closedRow(item) {
+  const c = getClient(item.clientId);
+
+  return `
+    <div class="appt">
+      <div class="row rowTop">
+        <div>
+          <b>${c?.name || "Client"}</b>
+          <p class="muted">${item.dateLabel} · ${item.service}</p>
+        </div>
+        <b>${money(Number(item.subtotal) + Number(item.tip))}</b>
+      </div>
+      <div class="grid3">
+        <div>
+          <b>${money(item.subtotal)}</b>
+          <p class="muted">Service</p>
+        </div>
+        <div>
+          <b>${money(item.tip)}</b>
+          <p class="muted">Tip</p>
+        </div>
+        <div>
+          <b>${item.payment}</b>
+          <p class="muted">Payment</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openClientMoney(clientId) {
+  const items = state.closed.filter(i => Number(i.clientId) === Number(clientId));
+
+  openMoneyPeriod(getClient(clientId).name, items.map(i => i.id));
+}
+
+function openTemplate(type) {
+  const c = state.clients[0];
+
+  const templates = {
+    confirm: `Hi ${c.name.split(" ")[0]}! Confirming your appointment with Cam tomorrow at 10:00. See you soon 💕`,
+    late: `Hi ${c.name.split(" ")[0]}! I’m running about 10 minutes behind. I’ll keep you posted and I’m so sorry for the delay.`,
+    rebook: `Hi ${c.name.split(" ")[0]}! I have Mon at 10, Tue at 1:30, or Thu at 3 for your next refresh. Want one of those?`,
+    winback: `Hi ${c.name.split(" ")[0]}! You popped into my mind. Want me to send a few openings for your next refresh?`
+  };
+
+  openTextModal(c, templates[type]);
+}
+
+function openCombo(name, minutes) {
+  const msg = `Hi! I have these times open for ${name.toLowerCase()}:\nMon July 14 at 10:00 AM\nTue July 15 at 1:30 PM\nThu July 17 at 3:00 PM`;
+
+  openModal(name, `
     <div class="stack">
+      <div class="card flat creamCard">
+        <b>Total time needed</b>
+        <p class="muted">About ${minutes} minutes with buffer.</p>
+      </div>
+      <button>Mon July 14 at 10:00 AM</button>
+      <button>Tue July 15 at 1:30 PM</button>
+      <button>Thu July 17 at 3:00 PM</button>
       <label>Message draft
         <textarea id="textDraft">${msg}</textarea>
       </label>
       <button class="primary" onclick="copyDraft()">Copy message</button>
-      <a class="sms" href="sms:${c.phone}">Open Messages</a>
     </div>
   `);
 }
 
-function renderPeople() {
-  document.getElementById("screen").innerHTML = `
-    <div class="card soft">
-      <h2>People</h2>
-      <p class="muted">Client memory, formulas, cycle timing, notes, and fast actions.</p>
-    </div>
+function openServices() {
+  openModal("Services and prices", `
     <div class="stack">
-      ${clients.map(c => `
-        <button class="client" onclick="openClient(${c.id})">
-          <span class="avatar">${initials(c.name)}</span>
-          <span style="flex:1">
-            <b>${c.name}</b>
-            <p class="muted">${c.service}</p>
-          </span>
-          <span>${money(c.spend)}</span>
-        </button>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderTools() {
-  document.getElementById("screen").innerHTML = `
-    <div class="card soft">
-      <h2>Tools</h2>
-      <p class="muted">Fast utilities Cam can use while working.</p>
-    </div>
-
-    <div class="card">
-      <h3>Combo finder</h3>
-      <p class="muted">Pick a combo and copy time options into iMessage.</p>
-      <div class="grid2">
-        <button onclick="combo('Color + Cut')">Color + Cut</button>
-        <button onclick="combo('Gloss + Blowdry')">Gloss + Blowdry</button>
-        <button onclick="combo('Balayage + Cut')">Balayage + Cut</button>
-        <button onclick="combo('Extensions')">Extensions</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Win back radar</h3>
-      ${clients.filter(c => c.daysSince > c.cycle * 1.25).map(c => `
+      ${state.services.map(s => `
         <div class="appt">
-          <b>${c.name}</b>
-          <p class="muted">Usually every ${c.cycle} days. Last visit ${c.daysSince} days ago. ${money(c.spend)} lifetime.</p>
-          <button onclick="openTextForClient(${c.id})">Draft win back text</button>
+          <div class="row">
+            <b>${s.name}</b>
+            <b>${money(s.price)}</b>
+          </div>
+          <p class="muted">${s.category} · ${s.duration} minutes</p>
         </div>
       `).join("")}
     </div>
-
-    <div class="card">
-      <h3>Apple Calendar</h3>
-      <p class="muted">Monday demo shows the Apple workflow. Real Apple sync needs native iOS EventKit later.</p>
-      <button onclick="openApple()">View Apple plan</button>
-    </div>
-  `;
-}
-
-function combo(name) {
-  const msg = `Hi! I have these times open for ${name.toLowerCase()}:\\nMon July 13 at 10:00 AM\\nTue July 14 at 1:30 PM\\nThu July 16 at 3:00 PM`;
-  openModal(name, `
-    <div class="stack">
-      <p class="muted">Next open slots for ${name}.</p>
-      <button>Mon July 13 at 10:00 AM</button>
-      <button>Tue July 14 at 1:30 PM</button>
-      <button>Thu July 16 at 3:00 PM</button>
-      <label>Text to copy
-        <textarea id="textDraft">${msg}</textarea>
-      </label>
-      <button class="primary" onclick="copyDraft()">Copy message</button>
-    </div>
   `);
 }
 
-function openApple() {
+function openApplePlan() {
   openModal("Apple Calendar plan", `
     <div class="stack">
-      <div class="card flat soft">
-        <b>Phase 1 demo</b>
-        <p>Show app calendar and booking flow inside this prototype.</p>
+      <div class="card flat pinkCard">
+        <b>Now</b>
+        <p class="muted">Cam can view the salon week inside this app and use it as a command center.</p>
+      </div>
+      <div class="card flat creamCard">
+        <b>Next</b>
+        <p class="muted">Production iOS wrapper can use Apple EventKit so her real Apple Calendar blocks availability and receives bookings.</p>
       </div>
       <div class="card flat">
-        <b>Phase 2 real sync</b>
-        <p>Wrap as iOS app and use Apple EventKit so Cam’s real Apple Calendar can block time and receive salon bookings.</p>
+        <b>Important</b>
+        <p class="muted">A plain web app can open links and copy text, but native iOS access is needed for true Apple Calendar sync.</p>
       </div>
-      <button class="primary" onclick="closeModal()">Got it</button>
     </div>
   `);
 }
 
-function renderMoney() {
-  const scheduled = appointments.filter(a => a.status !== "completed").reduce((s,a) => s + a.price, 0);
-  const completed = appointments.filter(a => a.status === "completed").reduce((s,a) => s + a.price, 0);
-  document.getElementById("screen").innerHTML = `
-    <div class="card soft">
-      <div class="sub">Forecast</div>
-      <h2>This week</h2>
-      <div class="money">${money(scheduled + completed)}</div>
-      <p class="muted">Based on scheduled appointments, not checkout reports.</p>
+function openAddAppointment() {
+  openModal("Add appointment", `
+    <div class="stack">
+      <label>Client
+        <select id="newApptClient">
+          ${state.clients.map(c => `<option value="${c.id}">${c.name}</option>`).join("")}
+        </select>
+      </label>
+      <label>Day
+        <select id="newApptDay">
+          ${dayOrder.map(d => `<option value="${d}">${d} July ${dayDates[d]}</option>`).join("")}
+        </select>
+      </label>
+      <label>Time
+        <input id="newApptTime" value="10:00 AM" />
+      </label>
+      <label>Service
+        <input id="newApptService" value="Base Color + Blowdry" />
+      </label>
+      <label>Price
+        <input id="newApptPrice" type="number" value="225" />
+      </label>
+      <label>Visible flag
+        <input id="newApptFlag" value="" placeholder="Wedding prep, sensitive scalp, extra time" />
+      </label>
+      <button class="primary" onclick="saveNewAppointment()">Create appointment</button>
     </div>
-    <div class="grid2">
-      <div class="card flat"><b>${money(scheduled)}</b><p class="muted">Still scheduled</p></div>
-      <div class="card flat"><b>${money(completed)}</b><p class="muted">Closed out</p></div>
-      <div class="card flat"><b>${appointments.length}</b><p class="muted">Appointments today</p></div>
-      <div class="card flat"><b>15%</b><p class="muted">Default tip estimate</p></div>
+  `);
+
+  document.getElementById("newApptDay").value = selectedDay;
+}
+
+function saveNewAppointment() {
+  state.appointments.push({
+    id: nextId(state.appointments),
+    clientId: Number(document.getElementById("newApptClient").value),
+    day: document.getElementById("newApptDay").value,
+    time: document.getElementById("newApptTime").value,
+    end: "Later",
+    service: document.getElementById("newApptService").value,
+    price: Number(document.getElementById("newApptPrice").value || 0),
+    status: "scheduled",
+    flag: document.getElementById("newApptFlag").value,
+    flagType: "event",
+    privateNote: "Created in demo."
+  });
+
+  saveState();
+  showToast("Appointment added");
+  closeModal();
+  render();
+}
+
+function openAddClient() {
+  openModal("Add client", `
+    <div class="stack">
+      <label>Name
+        <input id="newClientName" value="New Client" />
+      </label>
+      <label>Phone
+        <input id="newClientPhone" value="8185550199" />
+      </label>
+      <label>Usual service
+        <input id="newClientService" value="Base Color" />
+      </label>
+      <label>Cycle days
+        <input id="newClientCycle" type="number" value="35" />
+      </label>
+      <label>Formula note
+        <textarea id="newClientFormula">Formula notes go here.</textarea>
+      </label>
+      <button class="primary" onclick="saveNewClient()">Create client</button>
     </div>
-  `;
+  `);
+}
+
+function saveNewClient() {
+  state.clients.push({
+    id: nextId(state.clients),
+    name: document.getElementById("newClientName").value,
+    phone: document.getElementById("newClientPhone").value,
+    tier: "Core",
+    usualService: document.getElementById("newClientService").value,
+    cycle: Number(document.getElementById("newClientCycle").value || 35),
+    daysSince: 0,
+    spend: 0,
+    payment: "Venmo",
+    formula: document.getElementById("newClientFormula").value,
+    formulaHistory: [],
+    note: "New client."
+  });
+
+  saveState();
+  showToast("Client added");
+  closeModal();
+  renderPeople();
+}
+
+function resetDemo() {
+  if (!confirm("Reset demo data on this browser?")) {
+    return;
+  }
+
+  localStorage.removeItem(STORAGE_KEY);
+  state = loadState();
+
+  showToast("Demo reset");
+  render();
 }
 
 render();
