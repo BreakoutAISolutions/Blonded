@@ -1,0 +1,735 @@
+cat > index.html <<'HTML'
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cam Salon Command Center</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff7fa;
+      color: #111;
+    }
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 18px 14px 90px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: #77515d;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .card {
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 22px;
+      padding: 16px;
+      margin: 12px 0;
+      box-shadow: 0 5px 0 #111;
+    }
+    .soft {
+      background: #ffe6ef;
+    }
+    .flat {
+      box-shadow: none;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+    button, a.sms {
+      border: 2px solid #111;
+      background: #fff;
+      color: #111;
+      border-radius: 999px;
+      padding: 11px 13px;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    button.primary {
+      background: #111;
+      color: #fff;
+    }
+    button.pink {
+      background: #ffd9e6;
+    }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .appt {
+      border: 2px solid #111;
+      border-radius: 20px;
+      background: #fff;
+      padding: 14px;
+      margin: 10px 0;
+    }
+    .appt.done {
+      opacity: .55;
+      background: #f5f5f5;
+    }
+    .time {
+      font-size: 13px;
+      font-weight: 900;
+      color: #8b5367;
+      margin-bottom: 4px;
+    }
+    .name {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+    .service {
+      font-size: 14px;
+      color: #555;
+      margin: 4px 0 8px;
+    }
+    .flag {
+      display: inline-block;
+      padding: 7px 10px;
+      border: 1.5px solid #111;
+      border-radius: 999px;
+      background: #ffe6ef;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .flag.alert { background: #ffd5ca; }
+    .flag.event { background: #fff0bd; }
+    .flag.formula { background: #eee6ff; }
+    .muted {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(94%, 500px);
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 999px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.14);
+    }
+    .nav button {
+      border: 0;
+      box-shadow: none;
+      min-height: 42px;
+      padding: 9px 4px;
+      font-size: 12px;
+    }
+    .nav button.active {
+      background: #111;
+      color: #fff;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: none;
+      align-items: end;
+      justify-content: center;
+      padding: 12px;
+      z-index: 5;
+    }
+    .modal.show { display: flex; }
+    .sheet {
+      width: min(100%, 520px);
+      max-height: 88vh;
+      overflow: auto;
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 24px;
+      padding: 16px;
+    }
+    textarea, input, select {
+      width: 100%;
+      border: 2px solid #111;
+      border-radius: 16px;
+      padding: 12px;
+      font: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 120px; }
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .money {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+    .client {
+      width: 100%;
+      text-align: left;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border: 2px solid #111;
+      border-radius: 50%;
+      background: #ffd9e6;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: none;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 78px;
+      transform: translateX(-50%);
+      background: #111;
+      color: #fff;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 900;
+      display: none;
+      z-index: 9;
+    }
+    .toast.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="sub">Monday prototype</div>
+    <h1>Cam’s Salon Command Center</h1>
+    <p class="muted">Simple first. Function before beauty. Built around schedule, rebook, text, closeout, flags, and client memory.</p>
+    <div id="screen"></div>
+  </div>
+
+  <div class="nav">
+    <button onclick="setScreen('schedule')" id="nav-schedule">Schedule</button>
+    <button onclick="setScreen('people')" id="nav-people">People</button>
+    <button onclick="setScreen('tools')" id="nav-tools">Tools</button>
+    <button onclick="setScreen('money')" id="nav-money">Money</button>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div class="row">
+        <h2 id="modalTitle">Modal</h2>
+        <button onclick="closeModal()">Close</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Saved</div>
+
+<script>
+const clients = [
+  {
+    id: 1,
+    name: "Steffani Pugh",
+    phone: "8185550101",
+    tier: "VIP",
+    service: "Base Color + Blowdry",
+    cycle: 28,
+    daysSince: 42,
+    spend: 4070,
+    formula: "7NN + 6N. Low heat. Likes soft natural finish.",
+    note: "Sensitive scalp. Prefers quiet appointment."
+  },
+  {
+    id: 2,
+    name: "Dani Mare",
+    phone: "8185550102",
+    tier: "Core",
+    service: "Gloss + Cut",
+    cycle: 35,
+    daysSince: 21,
+    spend: 2850,
+    formula: "Gloss refresh. K18 when ends feel dry.",
+    note: "Likes quick appointment. Usually pays Venmo."
+  },
+  {
+    id: 3,
+    name: "Amanda K.",
+    phone: "8185550103",
+    tier: "VIP",
+    service: "Balayage + Cut",
+    cycle: 56,
+    daysSince: 63,
+    spend: 5220,
+    formula: "Keep brightness around face. No orange warmth.",
+    note: "Engagement photos coming up."
+  },
+  {
+    id: 4,
+    name: "Maya R.",
+    phone: "8185550104",
+    tier: "Core",
+    service: "Haircut",
+    cycle: 49,
+    daysSince: 14,
+    spend: 1320,
+    formula: "Long layers. Keep length.",
+    note: "Likes soft face frame."
+  }
+];
+
+let appointments = JSON.parse(localStorage.getItem("camAppointments") || "null") || [
+  {
+    id: 101,
+    clientId: 1,
+    time: "9:30 AM",
+    end: "11:45 AM",
+    price: 225,
+    status: "scheduled",
+    flag: "Sensitive scalp",
+    flagType: "alert",
+    privateNote: "Use gentle developer. Check comfort during processing."
+  },
+  {
+    id: 102,
+    clientId: 2,
+    time: "12:15 PM",
+    end: "1:45 PM",
+    price: 180,
+    status: "scheduled",
+    flag: "Use Splenda",
+    flagType: "formula",
+    privateNote: "Coffee order reminder. Ask about daughter."
+  },
+  {
+    id: 103,
+    clientId: 3,
+    time: "2:30 PM",
+    end: "5:30 PM",
+    price: 325,
+    status: "scheduled",
+    flag: "Engagement photos",
+    flagType: "event",
+    privateNote: "Extra polish today. Mention photos."
+  }
+];
+
+let screen = "schedule";
+let activeAppointment = null;
+let activeClient = null;
+
+function save() {
+  localStorage.setItem("camAppointments", JSON.stringify(appointments));
+}
+
+function money(n) {
+  return "$" + Number(n).toLocaleString();
+}
+
+function getClient(id) {
+  return clients.find(c => c.id === id);
+}
+
+function initials(name) {
+  return name.split(" ").map(x => x[0]).join("").slice(0,2);
+}
+
+function showToast(text) {
+  const el = document.getElementById("toast");
+  el.textContent = text;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 1400);
+}
+
+function setScreen(next) {
+  screen = next;
+  render();
+}
+
+function setNav() {
+  ["schedule","people","tools","money"].forEach(x => {
+    document.getElementById("nav-" + x).classList.toggle("active", screen === x);
+  });
+}
+
+function render() {
+  setNav();
+  if (screen === "schedule") renderSchedule();
+  if (screen === "people") renderPeople();
+  if (screen === "tools") renderTools();
+  if (screen === "money") renderMoney();
+}
+
+function renderSchedule() {
+  const total = appointments.reduce((sum, a) => sum + (a.status === "completed" ? 0 : a.price), 0);
+  document.getElementById("screen").innerHTML = `
+    <div class="card soft">
+      <div class="row">
+        <div>
+          <div class="sub">Today</div>
+          <h2>${appointments.length} appointments</h2>
+          <p class="muted">Projected remaining services: <b>${money(total)}</b></p>
+        </div>
+        <button class="primary" onclick="openApple()">Apple</button>
+      </div>
+    </div>
+
+    ${appointments.map(a => appointmentCard(a)).join("")}
+  `;
+}
+
+function appointmentCard(a) {
+  const c = getClient(a.clientId);
+  return `
+    <div class="appt ${a.status === "completed" ? "done" : ""}">
+      <div class="row">
+        <div>
+          <div class="time">${a.time} to ${a.end}</div>
+          <div class="name">${c.name}</div>
+          <div class="service">${c.service}</div>
+          ${a.flag ? `<div class="flag ${a.flagType}">${a.flag}</div>` : ""}
+        </div>
+        <div style="text-align:right">
+          <b>${money(a.price)}</b>
+          <div class="muted">${a.status}</div>
+        </div>
+      </div>
+      ${a.privateNote ? `<p class="muted">${a.privateNote}</p>` : ""}
+      <div class="grid3">
+        <button onclick="openText(${a.id})">Text</button>
+        <button onclick="openRebook(${a.id})">Rebook</button>
+        <button onclick="openCloseout(${a.id})">Closeout</button>
+      </div>
+      <div class="grid2" style="margin-top:8px">
+        <button onclick="openClient(${c.id})">Client card</button>
+        <button onclick="openFlag(${a.id})">Flag note</button>
+      </div>
+    </div>
+  `;
+}
+
+function openModal(title, body) {
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalBody").innerHTML = body;
+  document.getElementById("modal").classList.add("show");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+function openText(apptId) {
+  activeAppointment = appointments.find(a => a.id === apptId);
+  activeClient = getClient(activeAppointment.clientId);
+  const msg = `Hi ${activeClient.name.split(" ")[0]}! I have you today at ${activeAppointment.time} for ${activeClient.service}. See you soon 💕`;
+  openModal("Text " + activeClient.name, `
+    <div class="stack">
+      <p class="muted">Uses Cam’s real phone number. App prepares the message. Cam taps send in Messages.</p>
+      <label>Message draft
+        <textarea id="textDraft">${msg}</textarea>
+      </label>
+      <button class="primary" onclick="copyDraft()">Copy message</button>
+      <a class="sms" href="sms:${activeClient.phone}">Open Messages</a>
+      <p class="muted">Apple blocks silent auto send. This keeps Cam in control.</p>
+    </div>
+  `);
+}
+
+function copyDraft() {
+  const text = document.getElementById("textDraft").value;
+  navigator.clipboard.writeText(text).then(() => showToast("Copied"));
+}
+
+function openRebook(apptId) {
+  activeAppointment = appointments.find(a => a.id === apptId);
+  activeClient = getClient(activeAppointment.clientId);
+  const slots = [
+    "Mon July 13 at 10:00 AM",
+    "Tue July 14 at 1:30 PM",
+    "Thu July 16 at 3:00 PM"
+  ];
+  openModal("Rebook " + activeClient.name, `
+    <div class="stack">
+      <div class="card flat soft">
+        <b>Usual cycle</b>
+        <p>${activeClient.service} every ${activeClient.cycle} days.</p>
+      </div>
+      ${slots.map(s => `<button onclick="bookSlot('${s}')">${s}</button>`).join("")}
+      <button onclick="openText(${activeAppointment.id})">Draft text instead</button>
+    </div>
+  `);
+}
+
+function bookSlot(slot) {
+  showToast("Rebooked: " + slot);
+  closeModal();
+}
+
+function openCloseout(apptId) {
+  activeAppointment = appointments.find(a => a.id === apptId);
+  activeClient = getClient(activeAppointment.clientId);
+  openModal("Close out " + activeClient.name, `
+    <div class="stack">
+      <label>Service subtotal
+        <input id="subtotal" type="number" value="${activeAppointment.price}" oninput="updateTotal()" />
+      </label>
+      <label>Tip
+        <input id="tip" type="number" value="30" oninput="updateTotal()" />
+      </label>
+      <label>Payment method
+        <select id="payment">
+          <option>Square</option>
+          <option>Venmo</option>
+          <option>Zelle</option>
+          <option>Cash</option>
+        </select>
+      </label>
+      <div class="card flat soft">
+        <div class="sub">Total</div>
+        <div class="money" id="total">$${activeAppointment.price + 30}</div>
+      </div>
+      <label>Session note
+        <textarea id="sessionNote">Formula worked well. Rebook in ${activeClient.cycle} days.</textarea>
+      </label>
+      <button class="primary" onclick="finishCloseout()">Finish closeout</button>
+    </div>
+  `);
+}
+
+function updateTotal() {
+  const subtotal = Number(document.getElementById("subtotal").value || 0);
+  const tip = Number(document.getElementById("tip").value || 0);
+  document.getElementById("total").textContent = money(subtotal + tip);
+}
+
+function finishCloseout() {
+  activeAppointment.status = "completed";
+  activeAppointment.price = Number(document.getElementById("subtotal").value || activeAppointment.price);
+  save();
+  showToast("Closeout saved");
+  closeModal();
+  render();
+}
+
+function openFlag(apptId) {
+  activeAppointment = appointments.find(a => a.id === apptId);
+  activeClient = getClient(activeAppointment.clientId);
+  openModal("Flag for " + activeClient.name, `
+    <div class="stack">
+      <p class="muted">Short flag shows on the schedule. Private note stays inside the appointment.</p>
+      <label>Visible flag
+        <input id="flagText" value="${activeAppointment.flag || ""}" />
+      </label>
+      <label>Flag type
+        <select id="flagType">
+          <option value="alert">Allergy or sensitivity</option>
+          <option value="event">Special occasion</option>
+          <option value="formula">Formula reminder</option>
+          <option value="">Basic</option>
+        </select>
+      </label>
+      <label>Private note
+        <textarea id="privateNote">${activeAppointment.privateNote || ""}</textarea>
+      </label>
+      <button class="primary" onclick="saveFlag()">Save flag</button>
+    </div>
+  `);
+  document.getElementById("flagType").value = activeAppointment.flagType || "";
+}
+
+function saveFlag() {
+  activeAppointment.flag = document.getElementById("flagText").value;
+  activeAppointment.flagType = document.getElementById("flagType").value;
+  activeAppointment.privateNote = document.getElementById("privateNote").value;
+  save();
+  showToast("Flag saved");
+  closeModal();
+  render();
+}
+
+function openClient(id) {
+  activeClient = getClient(id);
+  openModal(activeClient.name, `
+    <div class="stack">
+      <div class="row">
+        <div class="avatar">${initials(activeClient.name)}</div>
+        <div>
+          <b>${activeClient.tier}</b>
+          <p class="muted">${activeClient.service}</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card flat"><b>${money(activeClient.spend)}</b><p class="muted">Lifetime spend</p></div>
+        <div class="card flat"><b>${activeClient.cycle} days</b><p class="muted">Usual cycle</p></div>
+      </div>
+      <div class="card flat soft"><b>Formula</b><p>${activeClient.formula}</p></div>
+      <div class="card flat"><b>Preference note</b><p>${activeClient.note}</p></div>
+      <button class="primary" onclick="openTextForClient(${activeClient.id})">Text client</button>
+    </div>
+  `);
+}
+
+function openTextForClient(id) {
+  const c = getClient(id);
+  const msg = `Hi ${c.name.split(" ")[0]}! I was looking at your usual timing and wanted to see if you want to get your next ${c.service.toLowerCase()} on the books.`;
+  openModal("Text " + c.name, `
+    <div class="stack">
+      <label>Message draft
+        <textarea id="textDraft">${msg}</textarea>
+      </label>
+      <button class="primary" onclick="copyDraft()">Copy message</button>
+      <a class="sms" href="sms:${c.phone}">Open Messages</a>
+    </div>
+  `);
+}
+
+function renderPeople() {
+  document.getElementById("screen").innerHTML = `
+    <div class="card soft">
+      <h2>People</h2>
+      <p class="muted">Client memory, formulas, cycle timing, notes, and fast actions.</p>
+    </div>
+    <div class="stack">
+      ${clients.map(c => `
+        <button class="client" onclick="openClient(${c.id})">
+          <span class="avatar">${initials(c.name)}</span>
+          <span style="flex:1">
+            <b>${c.name}</b>
+            <p class="muted">${c.service}</p>
+          </span>
+          <span>${money(c.spend)}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderTools() {
+  document.getElementById("screen").innerHTML = `
+    <div class="card soft">
+      <h2>Tools</h2>
+      <p class="muted">Fast utilities Cam can use while working.</p>
+    </div>
+
+    <div class="card">
+      <h3>Combo finder</h3>
+      <p class="muted">Pick a combo and copy time options into iMessage.</p>
+      <div class="grid2">
+        <button onclick="combo('Color + Cut')">Color + Cut</button>
+        <button onclick="combo('Gloss + Blowdry')">Gloss + Blowdry</button>
+        <button onclick="combo('Balayage + Cut')">Balayage + Cut</button>
+        <button onclick="combo('Extensions')">Extensions</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Win back radar</h3>
+      ${clients.filter(c => c.daysSince > c.cycle * 1.25).map(c => `
+        <div class="appt">
+          <b>${c.name}</b>
+          <p class="muted">Usually every ${c.cycle} days. Last visit ${c.daysSince} days ago. ${money(c.spend)} lifetime.</p>
+          <button onclick="openTextForClient(${c.id})">Draft win back text</button>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="card">
+      <h3>Apple Calendar</h3>
+      <p class="muted">Monday demo shows the Apple workflow. Real Apple sync needs native iOS EventKit later.</p>
+      <button onclick="openApple()">View Apple plan</button>
+    </div>
+  `;
+}
+
+function combo(name) {
+  const msg = `Hi! I have these times open for ${name.toLowerCase()}:\\nMon July 13 at 10:00 AM\\nTue July 14 at 1:30 PM\\nThu July 16 at 3:00 PM`;
+  openModal(name, `
+    <div class="stack">
+      <p class="muted">Next open slots for ${name}.</p>
+      <button>Mon July 13 at 10:00 AM</button>
+      <button>Tue July 14 at 1:30 PM</button>
+      <button>Thu July 16 at 3:00 PM</button>
+      <label>Text to copy
+        <textarea id="textDraft">${msg}</textarea>
+      </label>
+      <button class="primary" onclick="copyDraft()">Copy message</button>
+    </div>
+  `);
+}
+
+function openApple() {
+  openModal("Apple Calendar plan", `
+    <div class="stack">
+      <div class="card flat soft">
+        <b>Phase 1 demo</b>
+        <p>Show app calendar and booking flow inside this prototype.</p>
+      </div>
+      <div class="card flat">
+        <b>Phase 2 real sync</b>
+        <p>Wrap as iOS app and use Apple EventKit so Cam’s real Apple Calendar can block time and receive salon bookings.</p>
+      </div>
+      <button class="primary" onclick="closeModal()">Got it</button>
+    </div>
+  `);
+}
+
+function renderMoney() {
+  const scheduled = appointments.filter(a => a.status !== "completed").reduce((s,a) => s + a.price, 0);
+  const completed = appointments.filter(a => a.status === "completed").reduce((s,a) => s + a.price, 0);
+  document.getElementById("screen").innerHTML = `
+    <div class="card soft">
+      <div class="sub">Forecast</div>
+      <h2>This week</h2>
+      <div class="money">${money(scheduled + completed)}</div>
+      <p class="muted">Based on scheduled appointments, not checkout reports.</p>
+    </div>
+    <div class="grid2">
+      <div class="card flat"><b>${money(scheduled)}</b><p class="muted">Still scheduled</p></div>
+      <div class="card flat"><b>${money(completed)}</b><p class="muted">Closed out</p></div>
+      <div class="card flat"><b>${appointments.length}</b><p class="muted">Appointments today</p></div>
+      <div class="card flat"><b>15%</b><p class="muted">Default tip estimate</p></div>
+    </div>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>
+HTML
+
+python3 -m http.server 3000
