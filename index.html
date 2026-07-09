@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blonded by Cam Neighbor Salon</title>
+  <title>Blonded by Cam</title>
   <style>
     :root {
       --ink: #111111;
@@ -11,24 +11,21 @@
       --card: #ffffff;
       --pink: #ffdbe8;
       --pink2: #fff1f6;
-      --hot: #ff6f9f;
       --cream: #fff7df;
       --lav: #eee6ff;
       --coral: #ffd4c7;
       --green: #dff7e8;
-      --stone: #f2f2f2;
       --muted: #655b60;
-      --line: #111111;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--paper);
+      background:
+        radial-gradient(circle at top left, #ffe6ef 0, transparent 30%),
+        linear-gradient(180deg, #fffafc 0%, #ffffff 100%);
       color: var(--ink);
     }
 
@@ -41,7 +38,7 @@
 
     button,
     .smsLink {
-      border: 2px solid var(--line);
+      border: 2px solid var(--ink);
       background: var(--card);
       color: var(--ink);
       border-radius: 999px;
@@ -67,10 +64,6 @@
       background: var(--pink);
     }
 
-    button.soft {
-      background: var(--pink2);
-    }
-
     button.tiny {
       min-height: 34px;
       padding: 7px 10px;
@@ -81,7 +74,7 @@
     select,
     textarea {
       width: 100%;
-      border: 2px solid var(--line);
+      border: 2px solid var(--ink);
       border-radius: 16px;
       padding: 12px;
       background: white;
@@ -108,10 +101,10 @@
     }
 
     h1 {
-      font-size: 30px;
-      letter-spacing: -1.2px;
-      line-height: 1.02;
-      margin: 0 0 14px;
+      font-size: 40px;
+      letter-spacing: -1.6px;
+      line-height: 1;
+      margin: 0 0 8px;
     }
 
     h2 {
@@ -120,30 +113,40 @@
       margin-bottom: 8px;
     }
 
-    h3 {
-      margin-bottom: 7px;
-    }
+    h3 { margin-bottom: 7px; }
 
     .app {
       max-width: 540px;
       margin: 0 auto;
-      padding: 18px 14px 94px;
+      padding: 16px 14px 94px;
     }
 
-    .topbar {
+    .hero {
+      background: linear-gradient(135deg, #fff1f6, #ffffff);
+      border: 2px solid var(--ink);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: 0 7px 0 var(--ink);
+      margin: 0 0 16px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .heroText {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      margin: 0;
     }
 
     .logoDot {
-      width: 42px;
-      height: 42px;
+      width: 46px;
+      height: 46px;
       border: 2px solid var(--ink);
       border-radius: 50%;
-      background: var(--pink);
+      background: linear-gradient(135deg, #ffdbe8, #fff7df);
       display: grid;
       place-items: center;
       font-weight: 900;
@@ -152,36 +155,19 @@
 
     .card {
       background: var(--card);
-      border: 2px solid var(--line);
+      border: 2px solid var(--ink);
       border-radius: 22px;
       padding: 16px;
       margin: 12px 0;
       box-shadow: 0 5px 0 var(--ink);
     }
 
-    .flat {
-      box-shadow: none;
-    }
-
-    .pinkCard {
-      background: var(--pink2);
-    }
-
-    .creamCard {
-      background: var(--cream);
-    }
-
-    .lavCard {
-      background: var(--lav);
-    }
-
-    .greenCard {
-      background: var(--green);
-    }
-
-    .coralCard {
-      background: var(--coral);
-    }
+    .flat { box-shadow: none; }
+    .pinkCard { background: var(--pink2); }
+    .creamCard { background: var(--cream); }
+    .lavCard { background: var(--lav); }
+    .greenCard { background: var(--green); }
+    .coralCard { background: var(--coral); }
 
     .row {
       display: flex;
@@ -190,14 +176,8 @@
       gap: 10px;
     }
 
-    .rowTop {
-      align-items: flex-start;
-    }
-
-    .stack {
-      display: grid;
-      gap: 10px;
-    }
+    .rowTop { align-items: flex-start; }
+    .stack { display: grid; gap: 10px; }
 
     .grid2 {
       display: grid;
@@ -228,7 +208,7 @@
     }
 
     .appt {
-      border: 2px solid var(--line);
+      border: 2px solid var(--ink);
       border-radius: 21px;
       background: white;
       padding: 14px;
@@ -264,7 +244,7 @@
       align-items: center;
       gap: 6px;
       padding: 7px 10px;
-      border: 1.7px solid var(--line);
+      border: 1.7px solid var(--ink);
       border-radius: 999px;
       background: var(--pink);
       font-size: 12px;
@@ -273,21 +253,10 @@
       max-width: 100%;
     }
 
-    .flag.alert {
-      background: var(--coral);
-    }
-
-    .flag.event {
-      background: var(--cream);
-    }
-
-    .flag.formula {
-      background: var(--lav);
-    }
-
-    .flag.time {
-      background: var(--green);
-    }
+    .flag.alert { background: var(--coral); }
+    .flag.event { background: var(--cream); }
+    .flag.formula { background: var(--lav); }
+    .flag.timeFlag { background: var(--green); }
 
     .pillRow {
       display: flex;
@@ -344,9 +313,7 @@
       display: block;
     }
 
-    .dayCell.active {
-      background: var(--pink);
-    }
+    .dayCell.active { background: var(--pink); }
 
     .dayName {
       font-size: 11px;
@@ -372,6 +339,32 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .activityItem {
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      padding: 10px;
+      background: white;
+      margin: 8px 0;
+    }
+
+    .activityType {
+      display: inline-flex;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: var(--pink2);
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .bookingPreview {
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      padding: 14px;
+      background: var(--pink2);
     }
 
     .nav {
@@ -415,9 +408,7 @@
       z-index: 10;
     }
 
-    .modal.show {
-      display: flex;
-    }
+    .modal.show { display: flex; }
 
     .sheet {
       width: min(100%, 540px);
@@ -444,16 +435,7 @@
       z-index: 99;
     }
 
-    .toast.show {
-      display: block;
-    }
-
-    .divider {
-      height: 2px;
-      background: var(--ink);
-      opacity: .12;
-      margin: 12px 0;
-    }
+    .toast.show { display: block; }
 
     .empty {
       padding: 18px;
@@ -465,12 +447,15 @@
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
+    <div class="hero">
       <div>
+        <div class="sub">Salon command center</div>
         <h1>Blonded by Cam</h1>
+        <p class="heroText">Schedule, client memory, rebooking, texts, closeout, and money in one calm place.</p>
       </div>
       <div class="logoDot">BC</div>
     </div>
+
     <div id="screen"></div>
   </div>
 
@@ -495,7 +480,7 @@
   <div class="toast" id="toast">Saved</div>
 
 <script>
-const STORAGE_KEY = "blondedByCamNeighborSalonV2";
+const STORAGE_KEY = "blondedByCamV6";
 
 const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dayDates = {
@@ -667,7 +652,7 @@ const defaultAppointments = [
     price: 450,
     status: "scheduled",
     flag: "Extra time",
-    flagType: "time",
+    flagType: "timeFlag",
     privateNote: "First extension install. Do not stack too tight."
   },
   {
@@ -699,125 +684,34 @@ const defaultAppointments = [
 ];
 
 const defaultClosed = [
+  { id: 301, period: "today", dateLabel: "Today", clientId: 4, service: "Haircut", subtotal: 95, tip: 20, payment: "Cash" },
+  { id: 302, period: "thisWeek", dateLabel: "Tue", clientId: 2, service: "Gloss + Cut", subtotal: 180, tip: 35, payment: "Square" },
+  { id: 303, period: "thisWeek", dateLabel: "Wed", clientId: 1, service: "Base Color", subtotal: 145, tip: 30, payment: "Venmo" },
+  { id: 304, period: "lastWeek", dateLabel: "Last Mon", clientId: 3, service: "Balayage + Cut", subtotal: 325, tip: 60, payment: "Zelle" },
+  { id: 305, period: "lastWeek", dateLabel: "Last Tue", clientId: 5, service: "Extensions", subtotal: 450, tip: 80, payment: "Venmo" },
+  { id: 306, period: "lastWeek", dateLabel: "Last Wed", clientId: 2, service: "Gloss", subtotal: 120, tip: 25, payment: "Square" },
+  { id: 307, period: "thisMonth", dateLabel: "Jul 1", clientId: 1, service: "Base + Blowdry", subtotal: 225, tip: 40, payment: "Venmo" },
+  { id: 308, period: "thisMonth", dateLabel: "Jul 2", clientId: 4, service: "Haircut", subtotal: 95, tip: 15, payment: "Cash" },
+  { id: 309, period: "lastMonth", dateLabel: "Jun 5", clientId: 3, service: "Balayage", subtotal: 285, tip: 55, payment: "Zelle" },
+  { id: 310, period: "lastMonth", dateLabel: "Jun 7", clientId: 1, service: "Base Color", subtotal: 145, tip: 30, payment: "Venmo" },
+  { id: 311, period: "lastMonth", dateLabel: "Jun 11", clientId: 5, service: "Extensions Move Up", subtotal: 350, tip: 70, payment: "Venmo" },
+  { id: 312, period: "lastMonth", dateLabel: "Jun 18", clientId: 2, service: "Cut + Gloss", subtotal: 180, tip: 30, payment: "Square" }
+];
+
+const defaultActivities = [
   {
-    id: 301,
-    period: "today",
-    dateLabel: "Today",
-    clientId: 4,
-    service: "Haircut",
-    subtotal: 95,
-    tip: 20,
-    payment: "Cash"
-  },
-  {
-    id: 302,
-    period: "thisWeek",
-    dateLabel: "Tue",
-    clientId: 2,
-    service: "Gloss + Cut",
-    subtotal: 180,
-    tip: 35,
-    payment: "Square"
-  },
-  {
-    id: 303,
-    period: "thisWeek",
-    dateLabel: "Wed",
+    id: 1,
     clientId: 1,
-    service: "Base Color",
-    subtotal: 145,
-    tip: 30,
-    payment: "Venmo"
+    type: "Client note",
+    text: "Sensitive scalp. Keep flag visible on schedule.",
+    createdAt: "Today 8:40 AM"
   },
   {
-    id: 304,
-    period: "lastWeek",
-    dateLabel: "Last Mon",
+    id: 2,
     clientId: 3,
-    service: "Balayage + Cut",
-    subtotal: 325,
-    tip: 60,
-    payment: "Zelle"
-  },
-  {
-    id: 305,
-    period: "lastWeek",
-    dateLabel: "Last Tue",
-    clientId: 5,
-    service: "Extensions",
-    subtotal: 450,
-    tip: 80,
-    payment: "Venmo"
-  },
-  {
-    id: 306,
-    period: "lastWeek",
-    dateLabel: "Last Wed",
-    clientId: 2,
-    service: "Gloss",
-    subtotal: 120,
-    tip: 25,
-    payment: "Square"
-  },
-  {
-    id: 307,
-    period: "thisMonth",
-    dateLabel: "Jul 1",
-    clientId: 1,
-    service: "Base + Blowdry",
-    subtotal: 225,
-    tip: 40,
-    payment: "Venmo"
-  },
-  {
-    id: 308,
-    period: "thisMonth",
-    dateLabel: "Jul 2",
-    clientId: 4,
-    service: "Haircut",
-    subtotal: 95,
-    tip: 15,
-    payment: "Cash"
-  },
-  {
-    id: 309,
-    period: "lastMonth",
-    dateLabel: "Jun 5",
-    clientId: 3,
-    service: "Balayage",
-    subtotal: 285,
-    tip: 55,
-    payment: "Zelle"
-  },
-  {
-    id: 310,
-    period: "lastMonth",
-    dateLabel: "Jun 7",
-    clientId: 1,
-    service: "Base Color",
-    subtotal: 145,
-    tip: 30,
-    payment: "Venmo"
-  },
-  {
-    id: 311,
-    period: "lastMonth",
-    dateLabel: "Jun 11",
-    clientId: 5,
-    service: "Extensions Move Up",
-    subtotal: 350,
-    tip: 70,
-    payment: "Venmo"
-  },
-  {
-    id: 312,
-    period: "lastMonth",
-    dateLabel: "Jun 18",
-    clientId: 2,
-    service: "Cut + Gloss",
-    subtotal: 180,
-    tip: 30,
-    payment: "Square"
+    type: "Occasion",
+    text: "Engagement photos coming up. Appointment needs extra polish.",
+    createdAt: "Yesterday 4:12 PM"
   }
 ];
 
@@ -839,11 +733,10 @@ function loadState() {
     services: defaultServices,
     appointments: defaultAppointments,
     closed: defaultClosed,
+    activities: defaultActivities,
     settings: {
       weeklyGoal: 3250,
-      defaultTip: 15,
-      appleSync: false,
-      messagesMode: "Copy first, then open Messages"
+      defaultTip: 15
     }
   };
 }
@@ -890,10 +783,36 @@ function formatFlagType(type) {
     alert: "Allergy",
     event: "Occasion",
     formula: "Formula",
-    time: "Extra time"
+    timeFlag: "Extra time"
   };
 
   return map[type] || "Note";
+}
+
+function nowLabel() {
+  const d = new Date();
+
+  return d.toLocaleString([], {
+    weekday: "short",
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
+
+function addActivity(clientId, type, text) {
+  state.activities.unshift({
+    id: nextId(state.activities),
+    clientId: Number(clientId),
+    type,
+    text,
+    createdAt: nowLabel()
+  });
+
+  saveState();
+}
+
+function clientActivities(clientId) {
+  return state.activities.filter(a => Number(a.clientId) === Number(clientId));
 }
 
 function showToast(text) {
@@ -920,29 +839,16 @@ function setNav() {
 function render() {
   setNav();
 
-  if (screen === "schedule") {
-    renderSchedule();
-  }
-
-  if (screen === "calendar") {
-    renderCalendar();
-  }
-
-  if (screen === "people") {
-    renderPeople();
-  }
-
-  if (screen === "tools") {
-    renderTools();
-  }
-
-  if (screen === "money") {
-    renderMoney();
-  }
+  if (screen === "schedule") renderSchedule();
+  if (screen === "calendar") renderCalendar();
+  if (screen === "people") renderPeople();
+  if (screen === "tools") renderTools();
+  if (screen === "money") renderMoney();
 }
 
 function renderSchedule() {
   const appts = state.appointments.filter(a => a.day === selectedDay);
+
   const scheduledTotal = appts
     .filter(a => a.status !== "completed")
     .reduce((sum, a) => sum + Number(a.price || 0), 0);
@@ -958,7 +864,7 @@ function renderSchedule() {
           <h2>${appts.length} appointments</h2>
           <p class="muted">Projected services today: <b>${money(scheduledTotal)}</b></p>
         </div>
-        <button class="primary" onclick="setScreen('calendar')">View week</button>
+        <button class="primary" onclick="openAppleCalendar()">Open Apple Calendar</button>
       </div>
     </div>
 
@@ -1030,7 +936,7 @@ function appointmentCard(a) {
       </div>
       <div class="grid3" style="margin-top:8px">
         <button onclick="openClient(${c.id})">Client</button>
-        <button onclick="openFormula(${c.id})">Formula</button>
+        <button onclick="openBookingLink(${c.id})">Booking link</button>
         <button onclick="openFlag(${a.id})">Flag</button>
       </div>
     </div>
@@ -1042,11 +948,11 @@ function renderCalendar() {
     <div class="card pinkCard">
       <div class="row rowTop">
         <div>
-          <div class="sub">Calendar jump off</div>
-          <h2>Week view</h2>
-          <p class="muted">Tap a day to see that day’s schedule. Real Apple Calendar sync comes later with an iOS wrapper.</p>
+          <div class="sub">Apple Calendar</div>
+          <h2>Jump to Cam’s calendar</h2>
+          <p class="muted">This app prepares the salon workflow, then jumps her into Apple Calendar when she wants the real calendar view.</p>
         </div>
-        <button class="primary" onclick="openApplePlan()">Apple</button>
+        <button class="primary" onclick="openAppleCalendar()">Open Apple Calendar</button>
       </div>
     </div>
 
@@ -1068,9 +974,12 @@ function renderCalendar() {
     </div>
 
     <div class="card flat creamCard">
-      <h3>Apple Calendar preview</h3>
-      <p class="muted">This prototype shows the salon calendar. The production version can use Apple EventKit so Cam’s real calendar blocks availability and receives salon bookings.</p>
-      <button onclick="openApplePlan()">View Apple sync plan</button>
+      <h3>Production Apple sync</h3>
+      <p class="muted">The real version should use a native iOS wrapper with Apple Calendar permission. That lets the app read busy blocks and create salon appointments while keeping Cam’s Apple Calendar as the source she trusts.</p>
+      <div class="grid2">
+        <button onclick="openAppleCalendar()">Open Apple Calendar</button>
+        <button onclick="openApplePlan()">View sync plan</button>
+      </div>
     </div>
   `;
 }
@@ -1082,7 +991,7 @@ function renderPeople() {
         <div>
           <div class="sub">People</div>
           <h2>Client memory</h2>
-          <p class="muted">Search clients, formulas, notes, cycles, and fast text actions.</p>
+          <p class="muted">Search clients, formulas, notes, text activity, booking links, cycles, and fast actions.</p>
         </div>
         <button class="primary" onclick="openAddClient()">Add</button>
       </div>
@@ -1098,7 +1007,8 @@ function renderClientList() {
   const q = (document.getElementById("clientSearch")?.value || "").toLowerCase();
 
   const filtered = state.clients.filter(c => {
-    return [c.name, c.usualService, c.note, c.formula].join(" ").toLowerCase().includes(q);
+    const recentActivity = clientActivities(c.id).map(a => a.text).join(" ");
+    return [c.name, c.usualService, c.note, c.formula, recentActivity].join(" ").toLowerCase().includes(q);
   });
 
   document.getElementById("clientList").innerHTML = filtered.map(c => `
@@ -1106,7 +1016,7 @@ function renderClientList() {
       <span class="avatar">${initials(c.name)}</span>
       <span style="flex:1">
         <b>${c.name}</b>
-        <p class="muted">${c.usualService} · ${c.cycle} day cycle</p>
+        <p class="muted">${c.usualService} · ${c.cycle} day cycle · ${clientActivities(c.id).length} logs</p>
       </span>
       <span><b>${money(c.spend)}</b></span>
     </button>
@@ -1120,7 +1030,22 @@ function renderTools() {
     <div class="card pinkCard">
       <div class="sub">Tools</div>
       <h2>Quick actions</h2>
-      <p class="muted">Text templates, combo finder, win back radar, services, and Apple sync preview.</p>
+      <p class="muted">Text from iPhone, Apple Calendar launcher, booking link preview, templates, combo finder, win back radar, services, and settings.</p>
+    </div>
+
+    <div class="card creamCard">
+      <h3>iPhone first workflow</h3>
+      <p class="muted">Cam stays in her native tools. This app drafts the message, opens Messages, opens Apple Calendar, and logs what happened back to the client profile.</p>
+      <div class="grid2">
+        <button onclick="openTemplate('confirm')">Text from iPhone</button>
+        <button onclick="openAppleCalendar()">Open Apple Calendar</button>
+      </div>
+    </div>
+
+    <div class="card greenCard">
+      <h3>Booking link preview</h3>
+      <p class="muted">This shows the future flow. Cam texts a link. Client taps it. Client picks a suggested time. The production version books Apple Calendar and logs it to the client profile.</p>
+      <button class="primary" onclick="openBookingLink(1)">Preview booking link</button>
     </div>
 
     <div class="card">
@@ -1164,12 +1089,6 @@ function renderTools() {
       <button onclick="openServices()">View services</button>
     </div>
 
-    <div class="card flat creamCard">
-      <h3>Apple Calendar</h3>
-      <p class="muted">Real sync needs native iOS EventKit. For now this shows the intended workflow.</p>
-      <button onclick="openApplePlan()">View Apple plan</button>
-    </div>
-
     <div class="card flat coralCard">
       <h3>Demo reset</h3>
       <p class="muted">Resets local browser demo data only.</p>
@@ -1192,7 +1111,7 @@ function renderMoney() {
   document.getElementById("screen").innerHTML = `
     <div class="card pinkCard">
       <div class="sub">Money</div>
-      <h2>Revenue command center</h2>
+      <h2>Money snapshot</h2>
       <div class="moneyBig">${money(projectedWeek)}</div>
       <p class="muted">Projected this week based on scheduled appointments plus fake closed history.</p>
     </div>
@@ -1268,7 +1187,7 @@ function openText(apptId) {
 
   const msg = `Hi ${activeClient.name.split(" ")[0]}! I have you ${activeAppointment.day} at ${activeAppointment.time} for ${activeAppointment.service}. See you soon 💕`;
 
-  openTextModal(activeClient, msg);
+  openTextModal(activeClient, msg, "Appointment text");
 }
 
 function openTextForClient(clientId, type = "rebook") {
@@ -1280,79 +1199,237 @@ function openTextForClient(clientId, type = "rebook") {
     msg = `Hi ${c.name.split(" ")[0]}! I was looking at your usual timing and you’re right around that refresh window. Want me to send a few openings?`;
   }
 
-  openTextModal(c, msg);
+  openTextModal(c, msg, type === "winback" ? "Win back text" : "Rebook text");
 }
 
-function openTextModal(client, msg) {
-  openModal("Text " + client.name, `
+function openTextModal(client, msg, type) {
+  activeClient = client;
+
+  openModal("Text from iPhone", `
     <div class="stack">
       <div class="card flat pinkCard">
-        <b>Real iPhone number workflow</b>
-        <p class="muted">Copy the message, then open Messages. Cam reviews and taps send from her own phone number.</p>
+        <b>Uses Cam’s real phone number</b>
+        <p class="muted">Copy the message, open Messages, and Cam taps send from her own iPhone. This prototype logs the draft and opened action back to the client profile.</p>
       </div>
+      <label>Client
+        <input value="${client.name}" readonly />
+      </label>
       <label>Message draft
         <textarea id="textDraft">${msg}</textarea>
       </label>
       <div class="grid2">
-        <button class="primary" onclick="copyDraft()">Copy message</button>
-        <a class="smsLink" href="sms:${client.phone}">Open Messages</a>
+        <button class="primary" onclick="copyDraft(${client.id}, '${type}')">Copy and log</button>
+        <button onclick="openMessagesForClient(${client.id})">Open Messages</button>
+      </div>
+      <button class="pink" onclick="markTextSent(${client.id})">Mark text sent</button>
+      <button onclick="openBookingLink(${client.id})">Send booking link instead</button>
+      <div class="card flat creamCard">
+        <b>Important production note</b>
+        <p class="muted">A web app cannot read Cam’s iMessages. Production can log drafts, open the native composer, and capture manual status. Full iMessage thread sync is not promised here.</p>
       </div>
     </div>
   `);
 }
 
-function copyDraft() {
+function copyDraft(clientId, type) {
   const text = document.getElementById("textDraft").value;
 
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => showToast("Copied"));
+    navigator.clipboard.writeText(text).then(() => {
+      addActivity(clientId, "Text drafted", `${type}: ${text}`);
+      showToast("Copied and logged");
+    });
   } else {
     document.getElementById("textDraft").select();
     document.execCommand("copy");
-    showToast("Copied");
+    addActivity(clientId, "Text drafted", `${type}: ${text}`);
+    showToast("Copied and logged");
   }
+}
+
+function openMessagesForClient(clientId) {
+  const c = getClient(clientId);
+  const text = document.getElementById("textDraft")?.value || "";
+
+  addActivity(clientId, "Opened Messages", `Opened iPhone Messages for ${c.name}. Draft was: ${text}`);
+  saveState();
+  showToast("Logged open Messages");
+
+  setTimeout(() => {
+    window.location.href = "sms:" + c.phone;
+  }, 300);
+}
+
+function markTextSent(clientId) {
+  const text = document.getElementById("textDraft")?.value || "";
+
+  addActivity(clientId, "Text marked sent", text);
+  showToast("Marked sent");
+}
+
+function openAppleCalendar() {
+  showToast("Opening Apple Calendar");
+
+  setTimeout(() => {
+    window.location.href = "calshow://";
+  }, 250);
+}
+
+function openBookingLink(clientId) {
+  const c = getClient(clientId);
+  const fakeLink = "https://blondedbycam.com/book/" + c.id;
+  const msg = `Hi ${c.name.split(" ")[0]}! Here’s a quick booking link for your next ${c.usualService.toLowerCase()}: ${fakeLink}`;
+
+  activeClient = c;
+
+  openModal("Booking link for " + c.name, `
+    <div class="stack">
+      <div class="card flat greenCard">
+        <b>Future client booking flow</b>
+        <p class="muted">This is a prototype preview. Production needs a database, real availability logic, Apple Calendar integration, and a client facing booking page.</p>
+      </div>
+
+      <label>Text to send
+        <textarea id="textDraft">${msg}</textarea>
+      </label>
+
+      <div class="grid2">
+        <button class="primary" onclick="copyBookingLink(${c.id})">Copy booking text</button>
+        <button onclick="openMessagesForClient(${c.id})">Open Messages</button>
+      </div>
+
+      <button class="pink" onclick="previewClientBooking(${c.id})">Preview client view</button>
+      <button onclick="mockClientBook(${c.id}, 'Tue July 15 at 1:30 PM')">Demo confirm booking</button>
+
+      <div class="card flat creamCard">
+        <b>What production should do</b>
+        <p class="muted">Client taps link. Client picks a time. System confirms the appointment. System writes it to Cam’s Apple Calendar. System logs the booking inside this client profile.</p>
+      </div>
+    </div>
+  `);
+}
+
+function copyBookingLink(clientId) {
+  const text = document.getElementById("textDraft").value;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      addActivity(clientId, "Booking link drafted", text);
+      showToast("Booking text copied");
+    });
+  } else {
+    document.getElementById("textDraft").select();
+    document.execCommand("copy");
+    addActivity(clientId, "Booking link drafted", text);
+    showToast("Booking text copied");
+  }
+}
+
+function previewClientBooking(clientId) {
+  const c = getClient(clientId);
+
+  openModal("Client booking preview", `
+    <div class="stack">
+      <div class="bookingPreview">
+        <div class="sub">Blonded by Cam</div>
+        <h2>Pick your next appointment</h2>
+        <p class="muted">${c.name}, choose one of Cam’s suggested times for ${c.usualService}.</p>
+      </div>
+
+      <button onclick="mockClientBook(${c.id}, 'Mon July 14 at 10:00 AM')">Mon July 14 at 10:00 AM</button>
+      <button onclick="mockClientBook(${c.id}, 'Tue July 15 at 1:30 PM')">Tue July 15 at 1:30 PM</button>
+      <button onclick="mockClientBook(${c.id}, 'Thu July 17 at 3:00 PM')">Thu July 17 at 3:00 PM</button>
+
+      <div class="card flat creamCard">
+        <b>Demo behavior</b>
+        <p class="muted">When a time is tapped, this prototype adds a fake appointment, logs the action, and marks the future Apple Calendar step.</p>
+      </div>
+    </div>
+  `);
+}
+
+function mockClientBook(clientId, slot) {
+  const c = getClient(clientId);
+  const time = slot.split(" at ")[1] || "10:00 AM";
+
+  state.appointments.push({
+    id: nextId(state.appointments),
+    day: "Tue",
+    clientId: c.id,
+    time,
+    end: "Later",
+    service: c.usualService,
+    price: 175,
+    status: "scheduled",
+    flag: "Booked by link",
+    flagType: "event",
+    privateNote: "Prototype booking link flow. Production should write to Apple Calendar."
+  });
+
+  addActivity(c.id, "Client booking confirmed", `Client selected ${slot}. Prototype added appointment. Production should write to Apple Calendar.`);
+  saveState();
+  showToast("Booking confirmed");
+  closeModal();
+  selectedDay = "Tue";
+  setScreen("schedule");
 }
 
 function openRebook(apptId) {
   activeAppointment = state.appointments.find(a => Number(a.id) === Number(apptId));
   activeClient = getClient(activeAppointment.clientId);
 
+  showRebookModal(activeClient, activeAppointment.price);
+}
+
+function openRebookForClient(clientId) {
+  const c = getClient(clientId);
+
+  activeClient = c;
+  activeAppointment = { price: 175 };
+
+  showRebookModal(c, 175);
+}
+
+function showRebookModal(client, price) {
   const slots = [
     "Mon July 14 at 10:00 AM",
     "Tue July 15 at 1:30 PM",
     "Thu July 17 at 3:00 PM"
   ];
 
-  openModal("Rebook " + activeClient.name, `
+  openModal("Rebook " + client.name, `
     <div class="stack">
       <div class="card flat creamCard">
         <b>Suggested cycle</b>
-        <p class="muted">${activeClient.usualService} every ${activeClient.cycle} days. Last visit ${activeClient.daysSince} days ago.</p>
+        <p class="muted">${client.usualService} every ${client.cycle} days. Last visit ${client.daysSince} days ago.</p>
       </div>
       ${slots.map(slot => `
-        <button onclick="bookSlot('${slot}')">${slot}</button>
+        <button onclick="bookSlot('${slot}', ${client.id}, ${price})">${slot}</button>
       `).join("")}
-      <button class="pink" onclick="openTextForClient(${activeClient.id}, 'rebook')">Draft rebook text instead</button>
+      <button class="pink" onclick="openTextForClient(${client.id}, 'rebook')">Draft rebook text</button>
+      <button onclick="openBookingLink(${client.id})">Send booking link</button>
     </div>
   `);
 }
 
-function bookSlot(slot) {
-  const id = nextId(state.appointments);
+function bookSlot(slot, clientId, price) {
+  const client = getClient(clientId);
 
   state.appointments.push({
-    id,
+    id: nextId(state.appointments),
     day: "Mon",
-    clientId: activeClient.id,
+    clientId: client.id,
     time: slot.split(" at ")[1] || "10:00 AM",
     end: "Later",
-    service: activeClient.usualService,
-    price: Math.round(activeAppointment.price || 175),
+    service: client.usualService,
+    price: Math.round(price || 175),
     status: "scheduled",
     flag: "Rebooked",
     flagType: "event",
     privateNote: "Created from rebook flow."
   });
+
+  addActivity(client.id, "Rebooked", `Booked ${slot} for ${client.usualService}.`);
 
   saveState();
   showToast("Rebooked");
@@ -1405,6 +1482,7 @@ function finishCloseout() {
   const subtotal = Number(document.getElementById("closeSubtotal").value || activeAppointment.price);
   const tip = Number(document.getElementById("closeTip").value || 0);
   const payment = document.getElementById("closePayment").value;
+  const note = document.getElementById("closeNote").value;
 
   activeAppointment.status = "completed";
   activeAppointment.price = subtotal;
@@ -1422,6 +1500,8 @@ function finishCloseout() {
 
   activeClient.spend += subtotal + tip;
 
+  addActivity(activeClient.id, "Closeout", `${activeAppointment.service} closed out for ${money(subtotal + tip)} via ${payment}. Note: ${note}`);
+
   saveState();
   showToast("Closeout saved");
   closeModal();
@@ -1434,6 +1514,8 @@ function openClient(clientId) {
   const due = c.daysSince > c.cycle
     ? `Overdue by ${c.daysSince - c.cycle} days`
     : `Due in ${c.cycle - c.daysSince} days`;
+
+  const activities = clientActivities(c.id);
 
   openModal(c.name, `
     <div class="stack">
@@ -1464,29 +1546,33 @@ function openClient(clientId) {
         <p>${c.note}</p>
       </div>
       <div class="card flat creamCard">
+        <b>Activity log</b>
+        ${activities.length ? activities.slice(0, 6).map(a => activityRow(a)).join("") : `<p class="muted">No activity yet.</p>`}
+      </div>
+      <div class="card flat">
         <b>Formula history</b>
         ${c.formulaHistory.map(f => `<p class="muted">${f}</p>`).join("")}
       </div>
       <div class="grid2">
         <button onclick="openTextForClient(${c.id})">Text</button>
-        <button onclick="openFormula(${c.id})">Edit formula</button>
+        <button onclick="openBookingLink(${c.id})">Booking link</button>
         <button onclick="openRebookForClient(${c.id})">Rebook</button>
         <button onclick="openClientMoney(${c.id})">Money</button>
+        <button onclick="openFormula(${c.id})">Edit formula</button>
+        <button onclick="openAppleCalendar()">Apple Calendar</button>
       </div>
     </div>
   `);
 }
 
-function openRebookForClient(clientId) {
-  const c = getClient(clientId);
-  activeClient = c;
-  activeAppointment = { price: 175 };
-
-  const fakeId = state.appointments[0]?.id || 101;
-
-  closeModal();
-
-  setTimeout(() => openRebook(fakeId), 100);
+function activityRow(a) {
+  return `
+    <div class="activityItem">
+      <span class="activityType">${a.type}</span>
+      <p class="muted"><b>${a.createdAt}</b></p>
+      <p class="muted">${a.text}</p>
+    </div>
+  `;
 }
 
 function openFormula(clientId) {
@@ -1516,6 +1602,8 @@ function saveFormula(clientId) {
     c.formulaHistory.unshift(newHistory);
   }
 
+  addActivity(clientId, "Formula updated", c.formula);
+
   saveState();
   showToast("Formula saved");
   closeModal();
@@ -1541,7 +1629,7 @@ function openFlag(apptId) {
           <option value="alert">Allergy or sensitivity</option>
           <option value="event">Special occasion</option>
           <option value="formula">Formula reminder</option>
-          <option value="time">Extra time</option>
+          <option value="timeFlag">Extra time</option>
           <option value="">Basic note</option>
         </select>
       </label>
@@ -1559,6 +1647,8 @@ function saveFlag() {
   activeAppointment.flag = document.getElementById("flagText").value;
   activeAppointment.flagType = document.getElementById("flagType").value;
   activeAppointment.privateNote = document.getElementById("privateNote").value;
+
+  addActivity(activeAppointment.clientId, "Appointment flag updated", `${activeAppointment.flag}: ${activeAppointment.privateNote}`);
 
   saveState();
   showToast("Flag saved");
@@ -1643,11 +1733,22 @@ function openTemplate(type) {
     winback: `Hi ${c.name.split(" ")[0]}! You popped into my mind. Want me to send a few openings for your next refresh?`
   };
 
-  openTextModal(c, templates[type]);
+  const typeLabels = {
+    confirm: "Confirmation text",
+    late: "Running late text",
+    rebook: "Rebook text",
+    winback: "Win back text"
+  };
+
+  openTextModal(c, templates[type], typeLabels[type]);
 }
 
 function openCombo(name, minutes) {
+  const c = state.clients[0];
+
   const msg = `Hi! I have these times open for ${name.toLowerCase()}:\nMon July 14 at 10:00 AM\nTue July 15 at 1:30 PM\nThu July 17 at 3:00 PM`;
+
+  activeClient = c;
 
   openModal(name, `
     <div class="stack">
@@ -1661,7 +1762,11 @@ function openCombo(name, minutes) {
       <label>Message draft
         <textarea id="textDraft">${msg}</textarea>
       </label>
-      <button class="primary" onclick="copyDraft()">Copy message</button>
+      <div class="grid2">
+        <button class="primary" onclick="copyDraft(${c.id}, 'Combo finder text')">Copy and log</button>
+        <button onclick="openMessagesForClient(${c.id})">Open Messages</button>
+      </div>
+      <button onclick="openBookingLink(${c.id})">Send booking link instead</button>
     </div>
   `);
 }
@@ -1687,16 +1792,17 @@ function openApplePlan() {
     <div class="stack">
       <div class="card flat pinkCard">
         <b>Now</b>
-        <p class="muted">Cam can view the salon week inside this app and use it as a command center.</p>
+        <p class="muted">The prototype keeps a light salon week preview, but the real button is Open Apple Calendar.</p>
       </div>
       <div class="card flat creamCard">
-        <b>Next</b>
-        <p class="muted">Production iOS wrapper can use Apple EventKit so her real Apple Calendar blocks availability and receives bookings.</p>
+        <b>Production</b>
+        <p class="muted">Production should use a native iOS wrapper with Apple EventKit. That allows the app to read busy blocks and create appointments while keeping Apple Calendar central.</p>
       </div>
       <div class="card flat">
-        <b>Important</b>
-        <p class="muted">A plain web app can open links and copy text, but native iOS access is needed for true Apple Calendar sync.</p>
+        <b>Product rule</b>
+        <p class="muted">Do not trap Cam inside the app. Prepare the action, open the native iPhone tool, then log the action back to the client profile.</p>
       </div>
+      <button class="primary" onclick="openAppleCalendar()">Open Apple Calendar</button>
     </div>
   `);
 }
@@ -1734,9 +1840,11 @@ function openAddAppointment() {
 }
 
 function saveNewAppointment() {
+  const clientId = Number(document.getElementById("newApptClient").value);
+
   state.appointments.push({
     id: nextId(state.appointments),
-    clientId: Number(document.getElementById("newApptClient").value),
+    clientId,
     day: document.getElementById("newApptDay").value,
     time: document.getElementById("newApptTime").value,
     end: "Later",
@@ -1747,6 +1855,8 @@ function saveNewAppointment() {
     flagType: "event",
     privateNote: "Created in demo."
   });
+
+  addActivity(clientId, "Appointment created", "Created a demo appointment from the app.");
 
   saveState();
   showToast("Appointment added");
@@ -1778,7 +1888,7 @@ function openAddClient() {
 }
 
 function saveNewClient() {
-  state.clients.push({
+  const newClient = {
     id: nextId(state.clients),
     name: document.getElementById("newClientName").value,
     phone: document.getElementById("newClientPhone").value,
@@ -1791,7 +1901,10 @@ function saveNewClient() {
     formula: document.getElementById("newClientFormula").value,
     formulaHistory: [],
     note: "New client."
-  });
+  };
+
+  state.clients.push(newClient);
+  addActivity(newClient.id, "Client created", "Added in demo app.");
 
   saveState();
   showToast("Client added");
